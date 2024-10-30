@@ -628,3 +628,21 @@ ORDER BY CPU.TDP DESC
 LIMIT 15;
 ```
 ![](./imgs/advanceSQL3.png)
+##### Prompt 4:
+The user want to know CPUs and GPUs with TDP values above their respective averages and combines the results.
+##### Query 4:
+```
+SELECT 'CPU' AS Component, CPU.CPU_Name AS Component_Name, CPU.Manufacturer AS Manufacturer, CPU.TDP AS TDP
+FROM PC_Studio.CPU
+WHERE CPU.TDP > (SELECT AVG(TDP) FROM PC_Studio.CPU)
+
+UNION
+
+SELECT 'GPU' AS Component, GPU.GPU_Name AS Component_Name, GPU.Manufacturer AS Manufacturer, GPU.TDP AS TDP
+FROM PC_Studio.GPU
+WHERE GPU.TDP > (SELECT AVG(TDP) FROM PC_Studio.GPU)
+
+ORDER BY TDP DESC
+LIMIT 15;
+```
+![](./imgs/advanceSQL4.png)
