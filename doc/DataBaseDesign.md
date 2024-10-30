@@ -401,5 +401,173 @@
     ```
 
 
-
-                
+### DDL
+**Create Table**
+```
+CREATE TABLE IF NOT EXISTS User (
+    name VARCHAR(100) PRIMARY KEY
+);
+```
+```
+CREATE TABLE IF NOT EXISTS PC (
+    PC_ID INT,
+    owner VARCHAR(100) NOT NULL,
+    CPU_Name VARCHAR(100),
+    Cooler_Name VARCHAR(100),
+    Motherboard_Name VARCHAR(100),
+    Storage_Name VARCHAR(100),
+    Memory_Name VARCHAR(100),
+    GPU_Name VARCHAR(100),
+    PowerSupply_Name VARCHAR(100),
+    Estimated_Cost DECIMAL(10, 2),
+    PRIMARY KEY (PC_ID, owner),
+    FOREIGN KEY (owner) REFERENCES User(name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS CPU (
+    CPU_Name VARCHAR(100),
+    Manufacturer VARCHAR(100),
+    Series VARCHAR(100),
+    Microarchitecture VARCHAR(100),
+    Core_Family VARCHAR(100),
+    CPU_Socket VARCHAR(100),
+    Core_Count INT,
+    Thread_Count INT,
+    Performance_Core_Clock VARCHAR(100),
+    Performance_Core_Boost_Clock VARCHAR(100),
+    L2_Cache VARCHAR(100),
+    L3_Cache VARCHAR(100),
+    TDP INT,
+    Integrated_Graphics VARCHAR(100),
+    Maximum_Supported_Memory VARCHAR(100),
+    ECC_Support VARCHAR(100),
+    Includes_Cooler VARCHAR(100),
+    Includes_CPU_Cooler VARCHAR(100),
+    Lithography VARCHAR(100),
+    Simultaneous_Multithreading VARCHAR(100),
+    PRIMARY KEY (CPU_Name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS CPU_Cooler (
+    Cooler_Name VARCHAR(100),
+    Manufacturer VARCHAR(100),
+    Model VARCHAR(100),
+    Fan_RPM VARCHAR(100),
+    Noise_Level VARCHAR(100),
+    Height INT,
+    Water_Cooled BOOL,
+    Fanless BOOL,
+    PRIMARY KEY (Cooler_Name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS GPU (
+    GPU_Name VARCHAR(100),
+    Manufacturer VARCHAR(100),
+    Chipset VARCHAR(100),
+    Memory INT,
+    Memory_Type VARCHAR(100),
+    Core_Clock INT,
+    Boost_Clock INT,
+    Interface VARCHAR(100),
+    Frame_Sync VARCHAR(100),
+    Length INT,
+    TDP INT,
+    Case_Expansion_Slot_Width INT,
+    Total_Slot_Width INT,
+    Cooling VARCHAR(100),
+    External_Power VARCHAR(100),
+    HDMI_21_Outputs INT,
+    DisplayPort_14_Outputs INT,
+    PRIMARY KEY (GPU_Name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS Memory (
+    Memory_Name VARCHAR(100),
+    Manufacturer VARCHAR(100),
+    Speed VARCHAR(100),
+    Form_Factor VARCHAR(100),
+    Modules VARCHAR(100),
+    First_Word_Latency DECIMAL(10, 5),
+    CAS_Latency DECIMAL(10, 5),
+    Voltage DECIMAL(10, 5),
+    Timing VARCHAR(100),
+    ECC_Registered VARCHAR(100),
+    Heat_Spreader BOOL,
+    PRIMARY KEY (Memory_Name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS Motherboard (
+    Motherboard_Name VARCHAR(255),
+    Manufacturer VARCHAR(255),
+    Socket VARCHAR(255),
+    Form Factor VARCHAR(255),
+    Chipset VARCHAR(255),
+    Memory_Max INT,
+    Memory_Type VARCHAR(255),
+    Memory_Slots VARCHAR(255),
+    Memory_Speed VARCHAR(255),
+    PCIe_x16_Slots INT,
+    PCIe_x8_Slots INT,
+    PCIe_x4_Slots INT,
+    PCIe_x1_Slots INT,
+    PCI Slots INT,
+    M2_Slots INT,
+    Mini_PCIe_mSATA_Slots INT,
+    Half_Mini_PCIe_Slots INT,
+    Mini_PCIe_Slots INT,
+    mSATA_Slots INT,
+    SATA6_Gbs INT,
+    Onboard_Ethernet VARCHAR(255),
+    Onboard_Video VARCHAR(255),
+    USB_2_0_Headers INT,
+    USB_2_0_Headers_Single_Port INT,
+    USB_3_2_Gen_1_Headers INT,
+    USB_3_2_Gen_2_Headers INT,
+    USB_3_2_Gen_2x2_Headers INT,
+    Supports_ECC BOOL,
+    Wireless_Networking VARCHAR(255),
+    RAID_Support BOOL,
+    Uses_Back_Connect_Connectors BOOL,
+    PRIMARY KEY (Motherboard_Name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS PowerSupply (
+    PowerSupply_Name VARCHAR(255),
+    Manufacturer VARCHAR(255),
+    Model VARCHAR(255),
+    Type VARCHAR(255),
+    Efficiency_Rating VARCHAR(255),
+    Wattage INT,
+    Length INT,
+    Modular VARCHAR(255),
+    Fanless BOOL,
+    ATX_4_Pin_Connectors INT,
+    EPS_8_Pin_Connectors INT,
+    PCIe_12_4_Pin_12VHPWR_Connectors INT,
+    PCIe_12_Pin_Connectors INT,
+    PCIe_8_Pin_Connectors INT,
+    PCIe_6_2_Pin_Connectors INT,
+    PCIe_6_Pin_Connectors INT,
+    SATA_Connectors INT,
+    Molex_4_Pin_Connectors INT,
+    PRIMARY KEY (PowerSupply_Name)
+);
+```
+```
+CREATE TABLE IF NOT EXISTS Storage (
+    Storage_Name VARCHAR(255),
+    Manufacturer VARCHAR(255),
+    Capacity DECIMAL(10, 4),
+    Type VARCHAR(255),
+    Form_Factor VARCHAR(255),
+    Interface VARCHAR(255),
+    NVME BOOL,
+    PRIMARY KEY (Storage_Name)
+);
+```
