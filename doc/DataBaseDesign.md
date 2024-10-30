@@ -574,3 +574,40 @@ CREATE TABLE IF NOT EXISTS Storage (
 **Connection and row counts**
 ![](./imgs/sql_connection.png)
 ![](./imgs/table_count.png)
+
+**Advanced SQL queries**
+##### Prompt 1:
+The user wants to know more about storages that provides NVME compatibility, so the user wants to know the number of storage products of each manufacturer that supports NVME, while also have a capacity greater than or equal to the average capacity of that manufacturer.
+##### Query 1:
+```
+SELECT Storage.Manufacturer, COUNT(Storage.Storage_Name) AS Storage_Count
+FROM Storage
+WHERE Storage.NVME = TRUE
+  AND Storage.Capacity >= (
+      SELECT AVG(Capacity)
+      FROM Storage AS S2
+      WHERE S2.Manufacturer = Storage.Manufacturer
+  )
+GROUP BY Storage.Manufacturer
+LIMIT 15;
+```
+![](./imgs/advanceSQL1.png)
+##### Prompt 2:
+The user wants to know all the CPUs compatible with ASRock’s motherboards, as well as all the CPUs that have >= 4 cores and >= 4 threads
+##### Query 2:
+```
+SELECT CPU.CPU_Name
+FROM CPU
+JOIN (
+       SELECT * FROM Motherboard
+       WHERE Manufacturer = 'ASRock'
+) AS M
+ON CPU.CPU_Socket = M.Socket
+
+UNION
+
+SELECT CPU.CPU_Name
+FROM CPU
+WHERE Core_Count >= 4 AND Thread_Count >= 4;
+```
+![](./imgs/advanceSQL2.png)
