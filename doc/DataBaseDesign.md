@@ -485,7 +485,7 @@ CREATE TABLE IF NOT EXISTS GPU (
 );
 ```
 ```
-CREATE TABLE IF NOT EXISTS Memory (
+CREATE TABLE IF NOT EXISTS RAM (
     Memory_Name VARCHAR(100),
     Manufacturer VARCHAR(100),
     Speed VARCHAR(100),
@@ -505,7 +505,7 @@ CREATE TABLE IF NOT EXISTS Motherboard (
     Motherboard_Name VARCHAR(255),
     Manufacturer VARCHAR(255),
     Socket VARCHAR(255),
-    Form Factor VARCHAR(255),
+    Form_Factor VARCHAR(255),
     Chipset VARCHAR(255),
     Memory_Max INT,
     Memory_Type VARCHAR(255),
@@ -571,3 +571,6 @@ CREATE TABLE IF NOT EXISTS Storage (
     PRIMARY KEY (Storage_Name)
 );
 ```
+**Connection and row counts**
+![](./imgs/sql_connection.png)
+![](./imgs/table_count.png)
