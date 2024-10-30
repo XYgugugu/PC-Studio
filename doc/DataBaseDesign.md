@@ -646,3 +646,13 @@ ORDER BY TDP DESC
 LIMIT 15;
 ```
 ![](./imgs/advanceSQL4.png)
+
+
+**Indexing**
+#### Query 1:
+##### EXPLAIN ANALYZE (cost = 106.50)
+![](./imgs/advSQL_explain_analyze1.png)
+##### Index to NVME (cost = 67.10)
+![](./imgs/advSQL_index1_1.png)
+##### Index to Manufacturer (cost = 29.77)
+![](./imgs/advSQL_index2_1.png)
