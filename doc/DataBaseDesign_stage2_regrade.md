@@ -38,6 +38,7 @@
             This is the relationship between two components, representing that the two components are compatible with each other. The CPU and memory in a PC have to be compatible with each other in order for them to function correctly. By compatible it means that the CPU must be able to handle the Memory’s RAM speed to function properly. 
     - **TypeSupport(MotherBoard, Memory)**
             This is the relationship between two components, representing that the two components are compatible with each other. The MotherBoard and memory in a PC have to be compatible with each other in order for them to function correctly. By compatible it means that the MotherBoard must be able to support the Memory’s type in order to function correctly.
+
     ##### Relation Cardinality
     - **Design(User, PC)(1 - to - many)**
         A user can have mnay PC orders, but each PC only belongs to one user.
@@ -48,9 +49,12 @@
 
     ##### Relationship Table Schema
     - **Design(User,PC)(1 - to - many)**
+    ```
         Design(name: VARCHAR(255) [PK][FK to User.name], 
                PC_ID: INT [PK][FK to PC.PC_ID])
+    ```
     - **Select(PC,Components)(many - to - 1)**
+    ```
         Select(PC_ID: INT [PK][FK to PC.PC_ID], 
                MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name])
         Select(PC_ID: INT [PK][FK to PC.PC_ID], 
@@ -60,33 +64,48 @@
         Select(PC_ID: INT [PK][FK to PC.PC_ID], 
                CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
         Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               Cooler_Name: VARCHAR(255) [PK][FK to CPU_Cooler.Cooler_Name)
+               Cooler_Name: VARCHAR(255) [PK][FK to CPU_Cooler.Cooler_Name])
         Select(PC_ID: INT [PK][FK to PC.PC_ID], 
                Storage_Name: VARCHAR(255) [PK][FK to Storage.Storage_Name])
         Select(PC_ID: INT [PK][FK to PC.PC_ID], 
                Memory_Name: VARCHAR(255) [PK][FK to Memory.Memory_Name])
+    ```
     - **SupportCable(MotherBoard, PowerSupply)(many - to - many)**
+    ```
         SupportCable(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
                      PowerSupply_Name: VARCHAR(255) [PK][FK to PowerSupply.PowerSupply_Name])
+    ```
 	- **SlotSupport(MotherBoard, GPU)(many - to - many)**
+    ```
         SlotSupport(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
                     GPU_Name: VARCHAR(255) [PK][FK to GPU.GPU_Name])
+    ```
 	- **ShareSameSocket(CPU, CPU_Cooler)(many - to - many)**
+    ```
         ShareSameSocket(Cooler_Name: VARCHAR(255) [PK][FK to CPU_Cooler.Cooler_Name], 
                         CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
+    ```
     - **SupportSocket(MotherBoard, CPU)(many - to - many)**
+    ```
         SupportSocket(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
                       CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
+    ```
     - **TypeSlot(MotherBoard, Storage)(many - to - many)**
+    ```
         TypeSlot(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
                  Storage_Name: VARCHAR(255) [PK][FK to Storage.Storage_Name])
+    ```
     - **CanHandleRamSpeed(CPU, Memory)(many - to - many)**
+    ```
         CanHandleRamSpeed(Memory_Name: VARCHAR(255) [PK][FK to Memory.Memory_Name], 
                           CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
+    ```
     - **TypeSupport(MotherBoard, Memory)(many - to - many)**
+    ```
         TypeSupport(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
                     Memory_Name: VARCHAR(255) [PK][FK to Memory.Memory_Name])
-
+    ```
+    
 * ### Normalized database
     **Entity Set**
     ```
