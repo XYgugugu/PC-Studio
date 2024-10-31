@@ -315,7 +315,7 @@ With the index of ```Manufacturer```, the cost of these operations remain the sa
 
 ##### Index to ```CPU.TDP ```
 ![](./imgs/advSQL_index2_3.png)
-With the index of ```CPU.TDP ```, the cost of the operations remain the same except the filter which finds the CPU with TDP above the average. For this filter, the cost increase from 35.46 to 98.40. It could be due to the additional overhead estimated using the index of ```CPU.TDP ```. Overall, there is no improvement when using ```CPU.TDP ```.
+With the index of ```CPU.TDP ```, the cost of the operations remain the same except the filter which finds the CPU with TDP above the average. For this filter, the cost increase from 35.46 to 98.40. It could be due to the additional overhead estimated using the index of ```CPU.TDP ```. And since this index isnt highly selective to help skip many of the rows. It therefore become less efficient.
 
 
 ##### Index to ```CPU.CPU_Socket``` 
