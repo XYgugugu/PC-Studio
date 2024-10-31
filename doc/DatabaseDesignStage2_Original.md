@@ -76,7 +76,7 @@
     
     For each of the 7 components, all specifications are independent from each other and can be inferred by only knowing the product name.
 
-    Similarly, although there are several compatibility requirement between components, knowing one component only reduces the degree of availability of others.
+    Similarly, although there are several compatibility requirement between components, knowing one component only reduces the degree of availability of others..
 
     Therefore, the dependencies can be discovered:
 
