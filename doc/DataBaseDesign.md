@@ -652,7 +652,11 @@ LIMIT 15;
 #### Query 1:
 ##### EXPLAIN ANALYZE (cost = 106.50)
 ![](./imgs/advSQL_explain_analyze1.png)
-##### Index to NVME (cost = 67.10)
+##### Index to ```NVME``` (cost = 67.10)
 ![](./imgs/advSQL_index1_1.png)
-##### Index to Manufacturer (cost = 29.77)
+##### Index to ```Capacity``` (cost = 106.50)
 ![](./imgs/advSQL_index2_1.png)
+##### Index to ```Manufacturer``` (cost = 29.77)
+![](./imgs/advSQL_index3_1.png)
+##### Selected index: ```Manufacturer```
+The cost with this index is the lowest. Among the 3 attributes (```NVME```, ```Capacity```, ```Manufacturer```), its high cardinality helps reduce cost for search, especially with the query grouping entries by it, comparing to *NVME*, boolean, which also reduces the cost, but not that significant. Additionally, it is expected that indexing to ```Capacity```  alone does not help, since the condition depends on the comparison to ```AVG(Capacity)```, a subquery.
