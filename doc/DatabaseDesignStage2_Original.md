@@ -5,9 +5,9 @@
 * ### Assumptions
     ##### Entity
     - **User**
-        Contains the unique username of the user and the user’s plan of computer building, this is top level user information so must be an entity.
+        Contains the unique username and pc id of the user and the user’s plan of computer building, this is top level user information so must be an entity.
     - **PC**
-        This entity is where we have all the PC planning information stored. It contains the id of this PC plan, the User name for this plan and the name of each of the 7 components of the computer picked for this PC building, it’s a unique table of combination of the 7 components, so it’s an entity.
+        This entity is where we have all the PC planning information stored. It contains the id of this PC plan and the name of each of the 7 components of the computer picked for this PC building, it’s a unique table of combination of the 7 components, so it’s an entity.
     - **Components(Motherboard, CPU, CPU Cooler, GPU, Storage, Memory, Power Supply)**
         Each of these entities is a major individual component of a PC, and can be independently purchased when building a computer. 
 		CPU: the central processing unit, is like the heart of a pc, executes instructions of computer programs. It’s an individual component of a computer, users can change and purchase CPUs as long as compatible, and does not belong to any other major part of the computer,  so it’s an entity rather than an attribute.
@@ -45,76 +45,22 @@
         Each PC must have one item of each kind in order to function, while a same popular product can be selected by multiple PCs or an outdated product not being chosen by anyone. 
     - **Other Relations(many - to - many)**
         For commercial reasons, one product should be compatible with multiple kinds of other products, for example, motherboards like many Z690 series can support not just Intel 12th Gen, but also 13th, etc. As a result, their relations are all many - to - many
-
-    ##### Relationship Table Schema
-    - **Design(User,PC)(1 - to - many)**
-    ```
-        Design(name: VARCHAR(255) [PK][FK to User.name], 
-               PC_ID: INT [PK][FK to PC.PC_ID])
-    ```
-    - **Select(PC,Components)(many - to - 1)**
-    ```
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name])
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               PowerSupply_Name: VARCHAR(255) [PK][FK to PowerSupply.PowerSupply_Name])
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               GPU_Name: VARCHAR(255) [PK][FK to GPU.GPU_Name])
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               Cooler_Name: VARCHAR(255) [PK][FK to CPU_Cooler.Cooler_Name])
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               Storage_Name: VARCHAR(255) [PK][FK to Storage.Storage_Name])
-        Select(PC_ID: INT [PK][FK to PC.PC_ID], 
-               Memory_Name: VARCHAR(255) [PK][FK to Memory.Memory_Name])
-    ```
-    - **SupportCable(MotherBoard, PowerSupply)(many - to - many)**
-    ```
-        SupportCable(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
-                     PowerSupply_Name: VARCHAR(255) [PK][FK to PowerSupply.PowerSupply_Name])
-    ```
-	- **SlotSupport(MotherBoard, GPU)(many - to - many)**
-    ```
-        SlotSupport(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
-                    GPU_Name: VARCHAR(255) [PK][FK to GPU.GPU_Name])
-    ```
-	- **ShareSameSocket(CPU, CPU_Cooler)(many - to - many)**
-    ```
-        ShareSameSocket(Cooler_Name: VARCHAR(255) [PK][FK to CPU_Cooler.Cooler_Name], 
-                        CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
-    ```
-    - **SupportSocket(MotherBoard, CPU)(many - to - many)**
-    ```
-        SupportSocket(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
-                      CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
-    ```
-    - **TypeSlot(MotherBoard, Storage)(many - to - many)**
-    ```
-        TypeSlot(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
-                 Storage_Name: VARCHAR(255) [PK][FK to Storage.Storage_Name])
-    ```
-    - **CanHandleRamSpeed(CPU, Memory)(many - to - many)**
-    ```
-        CanHandleRamSpeed(Memory_Name: VARCHAR(255) [PK][FK to Memory.Memory_Name], 
-                          CPU_Name: VARCHAR(255) [PK][FK to CPU.CPU_Name])
-    ```
-    - **TypeSupport(MotherBoard, Memory)(many - to - many)**
-    ```
-        TypeSupport(MotherBoard_Name: VARCHAR(255) [PK][FK to MotherBoard.MotherBoard_Name], 
-                    Memory_Name: VARCHAR(255) [PK][FK to Memory.Memory_Name])
-    ```
     
+
+
+
+
+
 * ### Normalized database
     **Entity Set**
     ```
-    User(name)
+    User(User_Name, PC_ID)
 
-    PC(PC_ID, CPU_Name, Cooler_Name, MotherBoard_Name, Storage_Name, Memory_Name, GPU_Name, PowerSupply_Name, owner,Estimated_Cost)
+    PC(PC_ID, CPU_Name, Cooler_Name, MotherBoard_Name, Storage_Name, Memory_Name, GPU_Name, PowerSupply_Name, Estimated_Cost)
 
     MotherBoard(MotherBoard_Name, MotherBoard_Manufacturer, CPU Socket, Form Factor, Chipset, Memory Max, Memory Type, Memory Slots, Memory Speed, PCIe x16 Slots, PCIe x8 Slots, PCIe x4 Slots, PCIe x1 Slots, PCI Slots, M.2 Slots, Mini-PCIe Slots, Half Mini-PCIe Slots, Mini-PCIe / mSATA Slots, mSATA Slots, SATA 6.0 Gb/s, Onboard Ethernet, Onboard Video, USB 2.0 Headers, USB 2.0 Headers (Single Port), USB 3.2 Gen 1 Headers, USB 3.2 Gen 2 Headers, USB 3.2 Gen 2x2 Headers, Supports ECC, Wireless Networking, RAID Support, Uses Back-Connect Connectors, MotherBoard_Price)
 
-    CPU(CPU_Name, Manufacturer, Series, Microarchitecture, Core Family, CPU Socket, Core Count, Thread Count, Performance Core ClockPerformance Core Boost Clock, L2 Cache, L3 Cache, TDP, Integrated Graphics, Maximum Supported Memory, ECC Support, Includes CPU Cooler, Lithography, Simultaneous Multithreading, CPU_Price)
+    CPU(CPU_Name, CPU_Manufacturer, Series, Microarchitecture, Core Family, CPU Socket, Core Count, Thread Count, Performance Core ClockPerformance Core Boost Clock, L2 Cache, L3 Cache, TDP, Integrated Graphics, Maximum Supported Memory, ECC Support, Includes CPU Cooler, Lithography, Simultaneous Multithreading, CPU_Price)
 
     CPU Cooler(Cooler_Name, Cooler_Manufacturer, Model, Fan RPM, Noise Level, Height, CPU Socket, Water Cooled, Fanless, Cooler_Price)
 
@@ -135,6 +81,7 @@
     Therefore, the dependencies can be discovered:
 
     ```
+    User_Name -> PC_ID
 
     PC_ID -> CPU_Name
     PC_ID -> Cooler_Name
@@ -144,7 +91,6 @@
     PC_ID -> GPU_Name
     PC_ID -> PowerSupply_Name
     PC_ID -> Estimated_Cost
-    PC_ID -> owner
 
     MotherBoard_Name -> MotherBoard_Manufacturer
     MotherBoard_Name -> CPU Socket
@@ -178,7 +124,7 @@
     MotherBoard_Name -> Uses Back-Connect Connectors
     MotherBoard_Name -> MotherBoard_Price
 
-    CPU_Name -> Manufacturer
+    CPU_Name -> CPU_Manufacturer
     CPU_Name -> Series
     CPU_Name -> Microarchitecture
     CPU_Name -> Core Family
@@ -272,13 +218,13 @@
     **BCNF/3NF**
     Based on the dependencies shown above, all LHS are superkey, no partial or transitive dependency, all tables are already normalize, satisfying both BCNF and 3NF, that is:
     ```
-    User(name)
+    User(User_Name, PC_ID)
 
-    PC(PC_ID, CPU_Name, Cooler_Name, MotherBoard_Name, Storage_Name, Memory_Name, GPU_Name, PowerSupply_Name, owner, Estimated_Cost)
+    PC(PC_ID, CPU_Name, Cooler_Name, MotherBoard_Name, Storage_Name, Memory_Name, GPU_Name, PowerSupply_Name, Estimated_Cost)
 
     MotherBoard(MotherBoard_Name, MotherBoard_Manufacturer, CPU Socket, Form Factor, Chipset, Memory Max, Memory Type, Memory Slots, Memory Speed, PCIe x16 Slots, PCIe x8 Slots, PCIe x4 Slots, PCIe x1 Slots, PCI Slots, M.2 Slots, Mini-PCIe Slots, Half Mini-PCIe Slots, Mini-PCIe / mSATA Slots, mSATA Slots, SATA 6.0 Gb/s, Onboard Ethernet, Onboard Video, USB 2.0 Headers, USB 2.0 Headers (Single Port), USB 3.2 Gen 1 Headers, USB 3.2 Gen 2 Headers, USB 3.2 Gen 2x2 Headers, Supports ECC, Wireless Networking, RAID Support, Uses Back-Connect Connectors, MotherBoard_Price)
 
-    CPU(CPU_Name, Manufacturer, Series, Microarchitecture, Core Family, CPU Socket, Core Count, Thread Count, Performance Core ClockPerformance Core Boost Clock, L2 Cache, L3 Cache, TDP, Integrated Graphics, Maximum Supported Memory, ECC Support, Includes CPU Cooler, Lithography, Simultaneous Multithreading, CPU_Price)
+    CPU(CPU_Name, CPU_Manufacturer, Series, Microarchitecture, Core Family, CPU Socket, Core Count, Thread Count, Performance Core ClockPerformance Core Boost Clock, L2 Cache, L3 Cache, TDP, Integrated Graphics, Maximum Supported Memory, ECC Support, Includes CPU Cooler, Lithography, Simultaneous Multithreading, CPU_Price)
 
     CPU Cooler(Cooler_Name, Cooler_Manufacturer, Model, Fan RPM, Noise Level, Height, CPU Socket, Water Cooled, Fanless, Cooler_Price)
 
@@ -295,7 +241,8 @@
 * ### Relational Schema
     **User**
     ```
-    User(name: VARCHAR(255) [PK])
+    User(User_Name: VARCHAR(255) [PK], 
+         PC_ID: INT [FK to PC.PC_ID])
     ```
     **PC**
     ```
@@ -306,42 +253,37 @@
        Storage_Name: VARCHAR(255) [FK to Storage.Storage_Name], 
        Memory_Name: VARCHAR(255) [FK to Memory.Memory_Name], 
        GPU_Name: VARCHAR(255) [FK to GPU.GPU_Name], 
-       owner: VARCHAR(255) [FK to User.name],
-       Estimated_Cost DECIMAL(10, 2),
        PowerSupply_Name: VARCHAR(255) [FK to PowerSupply.PowerSupply_Name])
     ```
     **CPU**
     ```
     CPU(CPU_Name: VARCHAR(255) [PK], 
-        Manufacturer: VARCHAR(255), 
-        Series: VARCHAR(255), 
-        Microarchitecture: VARCHAR(255),
+        CPU_Manufacturer: VARCHAR(255), 
+        Series: VARCHAR(255), Microarchitecture: VARCHAR(255),
         Core Family: VARCHAR(255), 
         CPU Socket: VARCHAR(255), 
-        Core Count: INT,
-        Thread_Count: INT,
-        Performance Core Clock: VARCHAR(255)
-        Performance Core Boost Clock: VARCHAR(255),
-        L2 Cache: VARCHAR(255),
-        L3 Cache: VARCHAR(255),
+        Core Count: INT,Thread_Count: INT,
+        Performance Core Clock: FLOAT
+        Performance Core Boost Clock: FLOAT,
+        L2 Cache: INT,
+        L3 Cache: INT,
         TDP: INT,
-        Integrated Graphics: VARCHAR(255),
-        Maximum Supported Memory: VARCHAR(255),
-        ECC Support: VARCHAR(255),
-        Includes CPU VARCHAR(255)
-        Includes CPU Cooler: VARCHAR(255),
-        Lithography: VARCHAR(255),
-        Simultaneous Multithreading: VARCHAR(255),
+        Integrated Graphics: BOOL,
+        Maximum Supported Memory: INT,
+        ECC Support: BOOL,
+        Includes CPU Cooler: BOOL,
+        Lithography: INT,
+        Simultaneous Multithreading: BOOL,
         CPU_Price: FLOAT)
     ```
     **CPU_Cooler**
     ```
     CPU_Cooler( Cooler_Name: VARCHAR(255) [PK], 
-                Manufacturer: VARCHAR(255),
+                Cooler_Manufacturer: VARCHAR(255),
                 Model: VARCHAR(255),
-                Fan RPM: VARCHAR(255),
+                Fan RPM: INT,
                 Noise Level: VARCHAR(255),
-                Height: INT,
+                Height: FLOAT,
                 CPU Socket: VARCHAR(255),
                 Water Cooled: BOOL,
                 Fanless: BOOL,
@@ -351,52 +293,52 @@
     
     **MotherBoard**
     ```
-    MotherBoard(Motherboard_Name: VARCHAR(255)[PK],
-                Manufacturer: VARCHAR(255),
-                Socket: VARCHAR(255),
-                Form_Factor: VARCHAR(255),
-                Chipset: VARCHAR(255),
-                Memory_Max: INT,
-                Memory_Type: VARCHAR(255),
-                Memory_Slots: VARCHAR(255),
-                Memory_Speed: VARCHAR(255),
-                PCIe_x16_Slots: INT,
-                PCIe_x8_Slots: INT,
-                PCIe_x4_Slots: INT,
-                PCIe_x1_Slots: INT,
+    MotherBoard(MotherBoard_Name: VARCHAR(255) [PK],
+                MotherBoard_Manufacturer: VARCHAR(255),
+                CPU Socket: VARCHAR(255),
+                Form Factor: VARCHAR(255),
+                Chipset: VARCHAR(255), 
+                Memory Max: INT,
+                Memory Type: VARCHAR(255),
+                Memory Slots: INT,
+                Memory Speed: VARCHAR(255),
+                PCIe x16 Slots: INT,
+                PCIe x8 Slots: INT,
+                PCIe x4 Slots: INT,
+                PCIe x1 Slots: INT,
                 PCI Slots: INT,
-                M2_Slots: INT,
-                Mini_PCIe_mSATA_Slots: INT,
-                Half_Mini_PCIe_Slots: INT,
-                Mini_PCIe_Slots: INT,
-                mSATA_Slots: INT,
-                SATA6_Gbs: INT,
-                Onboard_Ethernet: VARCHAR(255),
-                Onboard_Video: VARCHAR(255),
-                USB_2_0_Headers: INT,
-                USB_2_0_Headers_Single_Port: INT,
-                USB_3_2_Gen_1_Headers: INT,
-                USB_3_2_Gen_2_Headers: INT,
-                USB_3_2_Gen_2x2_Headers: INT,
-                Supports_ECC: BOOL,
-                Wireless_Networking: VARCHAR(255),
-                RAID_Support: BOOL,
-                Uses_Back_Connect_Connectors: BOOL,
-                Motherboard_Price: FLOAT)
+                M.2 Slots: VARCHAR(255),
+                Mini-PCIe Slots: INT,
+                Half Mini-PCIe Slots: INT,
+                Mini-PCIe / mSATA Slots: INT,
+                mSATA Slots: INT,
+                SATA 6.0 Gb/s: INT,
+                Onboard Ethernet: VARCHAR(255),
+                Onboard Video: VARCHAR(255),
+                USB 2.0 Headers: INT,
+                USB 2.0 Headers (Single Port): INT,
+                USB 3.2 Gen 1 Headers: INT,
+                USB 3.2 Gen 2 Headers: INT,
+                USB 3.2 Gen 2x2 Headers: INT,
+                Supports ECC: BOOL,
+                Wireless Networking: VARCHAR(255),
+                RAID Support: BOOL,
+                Uses Back-Connect Connectors: BOOL,
+                MotherBoard_Price: FLOAT)
     ```
     **Memory**
     ```
-    Memory(Memory_Name: VARCHAR(255)[PK],
-           Manufacturer: VARCHAR(255),
+    Memory(Memory_Name: VARCHAR(255) [PK],
+           Memory_Manufacturer: VARCHAR(255),
            Speed: VARCHAR(255),
-           Form_Factor: VARCHAR(255),
+           Form Factor: VARCHAR(255),
            Modules: VARCHAR(255),
-           First_Word_Latency: DECIMAL(10, 5),
-           CAS_Latency: DECIMAL(10, 5),
-           Voltage: DECIMAL(10, 5),
+           First Word Latency: INT,
+           CAS Latency: INT,
+           Voltage: INT,
            Timing: VARCHAR(255),
-           ECC_Registered: VARCHAR(255),
-           Heat_Spreader: BOOL,
+           ECC / Registered: VARCHAR(255),
+           Heat Spreader: BOOL
            Memort_Price: FLOAT)
     ```
 
@@ -404,8 +346,8 @@
     **Storage**
     ```
     Storage(Storage_Name: VARCHAR(255)[PK],
-            Manufacturer: VARCHAR(255),
-            Capacity: DECIMAL(10, 4),
+            Storage_Manufacturer: VARCHAR(255),
+            Capacity: VARCHAR(255),
             Type: VARCHAR(255),
             Form Factor: VARCHAR(255),
             Interface: VARCHAR(255),
@@ -416,7 +358,7 @@
     **GPU**
     ```
     GPU(GPU_Name: VARCHAR(255)[PK],
-        Manufacturer: VARCHAR(255),
+        GPU_Manufacturer: VARCHAR(255),
         Chipset: VARCHAR(255),
         Memory: INT,
         Memory Type: VARCHAR(255),
@@ -438,7 +380,7 @@
     **PowerSupply**
     ```
     PowerSupply(PowerSupply_Name: VARCHAR(255)[PK],
-                Manufacturer: VARCHAR(255),
+                PowerSupply_Manufacturer: VARCHAR(255),
                 Model: VARCHAR(255),
                 Type: VARCHAR(255),
                 Efficiency Rating: VARCHAR(255),
@@ -457,3 +399,7 @@
                 Molex 4-Pin Connectors: INT,
                 PowerSupply_Price: FLOAT)
     ```
+
+
+
+                
