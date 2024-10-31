@@ -1,4 +1,4 @@
-### DDL
+# DDL
 **Create Table**
 ```
 CREATE TABLE IF NOT EXISTS User (
