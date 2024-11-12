@@ -1,1 +1,10 @@
-./LOGO-GPT.png
+database/*
+src/setup/*
+*.ipynb
+*.pyc
+crawl.py
+crawler.py
+util.py
+LOGO-GPT.png
+.gitignore
+local/
