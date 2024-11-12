@@ -17,10 +17,10 @@ const waitForInput = (query) => {
 (async () => {
     try {
         // setup connection
-        const host = await waitForInput('SQL instance IP: ');
-        const user = await waitForInput('MySQL username: ');
-        const password = await waitForInput('MySQL password: ');
-        const databse = await waitForInput('Database name: ');
+        const host = process.env.SQL_INSTANCE_IP || await waitForInput('SQL instance IP: ');
+        const user = process.env.MYSQL_USER || await waitForInput('MySQL username: ');
+        const password = process.env.MYSQL_PASSWORD || await waitForInput('MySQL password: ');
+        const databse = process.env.DATABASE_NAME || await waitForInput('Database name: ');
         const source = await waitForInput('Path to command source: ');
 
         // connect to Google Cloud SQL
