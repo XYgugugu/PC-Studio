@@ -8,3 +8,4 @@ util.py
 LOGO-GPT.png
 .gitignore
 local/
+.env
