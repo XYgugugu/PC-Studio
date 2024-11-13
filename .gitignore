@@ -1,11 +1,4 @@
-database/*
-src/setup/*
-*.ipynb
-*.pyc
-crawl.py
-crawler.py
-util.py
-LOGO-GPT.png
-.gitignore
-local/
+*.png
+database/
+src/local/
 .env

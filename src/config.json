@@ -1,0 +1,9 @@
+{
+    "frontend" : {
+        "PORT": 5000,
+        "login_url": "/login"
+    },
+    "backend" : {
+        
+    }
+}

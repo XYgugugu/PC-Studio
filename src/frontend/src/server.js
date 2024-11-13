@@ -1,4 +1,6 @@
 // init
+const config = require("../../config.json");
+
 const express = require('express');
 const app = express();
 
@@ -14,11 +16,11 @@ app.get('/', (req, res)=>{
     res.render('index');
 })
 // login
-app.get('/login', (req, res)=>{
+app.get(config.frontend.login, (req, res)=>{
     res.render('login', { clientId: process.env.GOOGLE_CLIENT_ID })
 })
 
 
-app.listen(PORT, ()=>{
-    console.log('Server running on port ${port}');
+app.listen(config.frontend.PORT, ()=>{
+    console.log('Server running on port ${config.frontend.PORT}');
 })
