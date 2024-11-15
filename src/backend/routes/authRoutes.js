@@ -9,7 +9,7 @@ const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(CLIENT_ID);
 
 // verify credential
-router.post(config.backend.route['verify-google-token'], async (req, res) => {
+router.post(config.backend['verify-google-token'].url, async (req, res) => {
     const credential = req.body.credential;
 
     if (!credential) {

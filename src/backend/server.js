@@ -15,7 +15,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const authRoutes = require('./routes/authRoutes');
-app.use('/api/oauth2', authRoutes);
+app.use(config.backend['verify-google-token'].route, authRoutes);
 
 const PORT = config.backend.PORT || 5000;
 
