@@ -14,8 +14,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-const authRoutes = require('./routes/authRoutes');
-app.use(config.backend['verify-google-token'].route, authRoutes);
+const oauth2 = require('./routes/oauth2');
+app.use(config.backend['verify-google-token'].route, oauth2);
+
+const gallery = require('./routes/gallery');
+app.use(config.backend['item-gallery'].route, gallery);
 
 const PORT = config.backend.PORT || 5000;
 
