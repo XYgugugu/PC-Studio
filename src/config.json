@@ -1,9 +1,12 @@
 {
     "frontend" : {
-        "PORT": 5000,
+        "PORT": 5001,
         "login_url": "/login"
     },
     "backend" : {
-        
+        "PORT": 5000,
+        "route":{
+            "verify-google-token": "/verify-token"
+        }
     }
 }
