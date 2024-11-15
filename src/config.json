@@ -8,6 +8,10 @@
         "verify-google-token": {
             "route": "/api/oauth2",
             "url" : "/verify-token"
+        },
+        "item-gallery": {
+            "route": "/api/data",
+            "url": "/gallery"
         }
     }
 }
