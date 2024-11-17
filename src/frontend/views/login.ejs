@@ -5,44 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <div id="g_id_onload"
-        data-client_id="<%= clientId %>"
-        data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin" data-type="standard"></div>
 
     <title>Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff; 
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .g_id_signin {
+            margin-top: 20px;
+        }
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-    <body>
-        <h1>Login</h1>
+<body>
+    <div class="container">
+        <h1> Welcome to PC Studio <span>😊</span> </h1>
+        
+        <!-- Google Sign-In Button -->
+        <div id="g_id_onload"
+            data-client_id="<%= clientId %>"
+            data-callback="handleCredentialResponse">
+        </div>
+        <div class="g_id_signin" data-type="standard"></div>
+    </div>
 
-        <script>
-            function handleCredentialResponse(response) {
-                console.log("Signed in")
-                const responsePayload = decodeJwtResponse(response.credential);
+    <script>
+        function handleCredentialResponse(response) {
+            console.log("Signed in");
+            const responsePayload = decodeJwtResponse(response.credential);
 
-                console.log("ID: " + responsePayload.sub);
-                console.log('Full Name: ' + responsePayload.name);
-                console.log('Given Name: ' + responsePayload.given_name);
-                console.log('Family Name: ' + responsePayload.family_name);
-                console.log("Image URL: " + responsePayload.picture);
-                console.log("Email: " + responsePayload.email);
+            console.log("ID: " + responsePayload.sub);
+            console.log("Full Name: " + responsePayload.name);
+            console.log("Given Name: " + responsePayload.given_name);
+            console.log("Family Name: " + responsePayload.family_name);
+            console.log("Image URL: " + responsePayload.picture);
+            console.log("Email: " + responsePayload.email);
 
-                // direct back to entry
-                window.location.href = '/'
 
-                // @TODO: update database if new user
-            }
-            function decodeJwtResponse(token) {
-                // Split the JWT into its three parts: header, payload, and signature
-                const base64Url = token.split('.')[1];
-                // Decode the Base64 URL-safe string to Base64
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                // Decode the Base64 encoded payload to JSON
-                const jsonPayload = atob(base64);
-                // Parse the JSON string to get a JavaScript object
-                return JSON.parse(jsonPayload);
-            }
-        </script>
-    </body>
+            fetch('http://localhost:5002/api/oauth2/verify-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ credential: response.credential }),
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("succeed");
+                    console.log(data.user);
+                    sessionStorage.setItem('user_image', data.user.profile || '/png/default.png');
+                    // Perform actions on successful authentication (e.g., redirect)
+                    window.location.href = '/';
+                } else {
+                    console.error(data.message);
+                }
+            })
+            .catch(err => {
+                console.error("Error:", error);
+            });
+
+
+            // Redirect back to entry
+            // window.location.href = '/';
+
+            // @TODO: Update database if new user
+        }
+
+        function decodeJwtResponse(token) {
+            // Split the JWT into its three parts: header, payload, and signature
+            const base64Url = token.split('.')[1];
+            // Decode the Base64 URL-safe string to Base64
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            // Decode the Base64 encoded payload to JSON
+            const jsonPayload = atob(base64);
+            // Parse the JSON string to get a JavaScript object
+            return JSON.parse(jsonPayload);
+        }
+    </script>
+</body>
 </html>

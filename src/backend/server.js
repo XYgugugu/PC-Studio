@@ -20,7 +20,7 @@ app.use(config.backend['verify-google-token'].route, oauth2);
 const gallery = require('./routes/gallery');
 app.use(config.backend['item-gallery'].route, gallery);
 
-const PORT = config.backend.PORT || 5000;
+const PORT = config.backend.PORT || 5001;
 
 app.listen(PORT, () => {
     console.log(`Backend server is running on port ${PORT}`);
