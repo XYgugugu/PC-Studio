@@ -1,5 +1,0 @@
-nodemon
-express
-passport
-cookie-parser
-ejs

@@ -13,14 +13,14 @@ app.set('view engine', 'ejs');
 
 // root
 app.get('/', (req, res)=>{
-    res.render('index');
+    res.render('login', { clientId: process.env.GOOGLE_CLIENT_ID })
 })
 // login
-app.get(config.frontend.login, (req, res)=>{
-    res.render('login', { clientId: process.env.GOOGLE_CLIENT_ID })
+app.get('/index', (req, res)=>{
+    res.render('index');
 })
 
 
 app.listen(config.frontend.PORT, ()=>{
-    console.log('Server running on port ${config.frontend.PORT}');
+    console.log(`Server running on port ${config.frontend.PORT}`);
 })
