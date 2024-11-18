@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Gallery</title>
+    <style>
+        body {
+            background-color: #fff; 
+            color: #000; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cpu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .cpu-table th, .cpu-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .cpu-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>CPU Gallery</h1>
+    <table class="cpu-table">
+        <thead>
+            <tr>
+                <th>CPU Name</th>
+                <th>Manufacturer</th>
+                <th>Series</th>
+                <th>Core Count</th>
+                <th>Thread Count</th>
+                <th>Core Clock</th>
+                <th>L2 Cache</th>
+                <th>L3 Cache</th>
+                <th>Integrated Graphics</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% cpus.forEach(cpu => { %>
+            <tr>
+                <td><%= cpu.CPU_Name %></td>
+                <td><%= cpu.Manufacturer %></td>
+                <td><%= cpu.Series %></td>
+                <td><%= cpu.Core_Count %></td>
+                <td><%= cpu.Thread_Count %></td>
+                <td><%= cpu.Performance_Core_Clock %></td>
+                <td><%= cpu.L2_Cache %></td>
+                <td><%= cpu.L3_Cache %></td>
+                <td><%= cpu.Integrated_Graphics %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

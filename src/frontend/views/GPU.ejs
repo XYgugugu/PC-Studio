@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Gallery</title>
+    <style>
+        body {
+            background-color: #fff; 
+            color: #000; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .gpu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .gpu-table th, .gpu-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .gpu-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>GPU Gallery</h1>
+    <table class="gpu-table">
+        <thead>
+            <tr>
+                <th>GPU Name</th>
+                <th>Manufacturer</th>
+                <th>Chipset</th>
+                <th>Memory (GB)</th>
+                <th>Memory Type</th>
+                <th>Core Clock (MHz)</th>
+                <th>Boost Clock (MHz)</th>
+                <th>Interface</th>
+                <th>Frame Sync</th>
+                <th>Length (mm)</th>
+                <th>TDP (W)</th>
+                <th>Case Slot Width</th>
+                <th>Total Slot Width</th>
+                <th>Cooling</th>
+                <th>External Power</th>
+                <th>HDMI Outputs</th>
+                <th>DisplayPort Outputs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% gpus.forEach(gpu => { %>
+            <tr>
+                <td><%= gpu.GPU_Name %></td>
+                <td><%= gpu.Manufacturer %></td>
+                <td><%= gpu.Chipset %></td>
+                <td><%= gpu.Memory %></td>
+                <td><%= gpu.Memory_Type %></td>
+                <td><%= gpu.Core_Clock %></td>
+                <td><%= gpu.Boost_Clock %></td>
+                <td><%= gpu.Interface %></td>
+                <td><%= gpu.Frame_Sync %></td>
+                <td><%= gpu.Length %></td>
+                <td><%= gpu.TDP %></td>
+                <td><%= gpu.Case_Expansion_Slot_Width %></td>
+                <td><%= gpu.Total_Slot_Width %></td>
+                <td><%= gpu.Cooling %></td>
+                <td><%= gpu.External_Power %></td>
+                <td><%= gpu.HDMI_21_Outputs %></td>
+                <td><%= gpu.DisplayPort_14_Outputs ? gpu.DisplayPort_14_Outputs : 'N/A' %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

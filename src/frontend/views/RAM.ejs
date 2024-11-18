@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Gallery</title>
+    <style>
+        body {
+            background-color: #fff; 
+            color: #000; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .memory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .memory-table th, .memory-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .memory-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Memory Gallery</h1>
+    <table class="memory-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Speed</th>
+                <th>Form Factor</th>
+                <th>Modules</th>
+                <th>First Word Latency (ns)</th>
+                <th>CAS Latency</th>
+                <th>Voltage (V)</th>
+                <th>Timing</th>
+                <th>ECC Registered</th>
+                <th>Heat Spreader</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% memories.forEach(memory => { %>
+            <tr>
+                <td><%= memory.Memory_Name %></td>
+                <td><%= memory.Manufacturer %></td>
+                <td><%= memory.Speed %></td>
+                <td><%= memory.Form_Factor %></td>
+                <td><%= memory.Modules %></td>
+                <td><%= memory.First_Word_Latency %></td>
+                <td><%= memory.CAS_Latency %></td>
+                <td><%= memory.Voltage %></td>
+                <td><%= memory.Timing ? memory.Timing : 'N/A' %></td>
+                <td><%= memory.ECC_Registered %></td>
+                <td><%= memory.Heat_Spreader ? 'Yes' : 'No' %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

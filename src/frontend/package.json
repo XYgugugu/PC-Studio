@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "axios": "^1.7.7",
+    "express-ejs-layouts": "^2.5.1",
     "nodemon": "^3.1.7"
   },
   "dependencies": {
