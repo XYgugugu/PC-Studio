@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Gallery</title>
+    <style>
+        body {
+            background-color: #fff; /* 白底 */
+            color: #000; /* 黑字 */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .storage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .storage-table th, .storage-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .storage-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Storage Gallery</h1>
+    <table class="storage-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Capacity (TB)</th>
+                <th>Type</th>
+                <th>Form Factor</th>
+                <th>Interface</th>
+                <th>NVME</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% storages.forEach(storage => { %>
+            <tr>
+                <td><%= storage.Storage_Name %></td>
+                <td><%= storage.Manufacturer %></td>
+                <td><%= parseFloat(storage.Capacity) %></td>
+                <td><%= storage.Type %></td>
+                <td><%= storage.Form_Factor %></td>
+                <td><%= storage.Interface %></td>
+                <td><%= storage.NVME ? 'Yes' : 'No' %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <style>
+        body {
+            background-color: #fff;
+            color: #000; 
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto; 
+            width: 100%; 
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%; 
+        }
+
+        .drawer {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            width: 100%; 
+            max-width: 1000px; 
+            margin: 10px 0; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px;
+            background-color: #f9f9f9; 
+        }
+
+        label {
+            flex: 1;
+            text-align: left;
+            font-size: 16px; 
+        }
+
+        select {
+            flex: 3; 
+            padding: 10px;
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%; 
+        }
+
+        button {
+            padding: 10px 30px; 
+            background-color: #000; 
+            color: #fff; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #444; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <img src="XJFT.png" alt="Logo_XJFT" style="max-width: 200px; height: auto;">
+    </div>
+
+    <!-- Drawers Container -->
+    <div class="container">
+        <form action="/submit" method="POST">
+            <!-- Drawers -->
+            <div class="drawer">
+                <label for="size">Size:</label>
+                <select name="size" id="size">
+                    <option value="10">10</option>
+                    <option value="12">12</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
+
+            <div class="drawer">
+                <label for="prize">Prize:</label>
+                <select name="prize" id="prize">
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                </select>
+            </div>
+
+            <div class="drawer">
+                <label for="performance">Performance:</label>
+                <select name="performance" id="performance">
+                    <option value="3060">3060</option>
+                    <option value="4090">4090</option>
+                </select>
+            </div>
+
+            <div class="drawer">
+                <label for="type">Type:</label>
+                <select name="type" id="type">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="button-container">
+                <button type="submit">Customize</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

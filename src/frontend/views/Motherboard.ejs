@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motherboard Gallery</title>
+    <style>
+        body {
+            background-color: #fff; /* 白底 */
+            color: #000; /* 黑字 */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .motherboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .motherboard-table th, .motherboard-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .motherboard-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Motherboard Gallery</h1>
+    <table class="motherboard-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Socket</th>
+                <th>Form Factor</th>
+                <th>Chipset</th>
+                <th>Max Memory (GB)</th>
+                <th>Memory Type</th>
+                <th>Memory Slots</th>
+                <th>Memory Speed</th>
+                <th>PCIe x16 Slots</th>
+                <th>SATA Ports (6 Gbps)</th>
+                <th>Onboard Ethernet</th>
+                <th>Onboard Video</th>
+                <th>USB 2.0 Headers</th>
+                <th>USB 3.2 Gen 1 Headers</th>
+                <th>Supports ECC</th>
+                <th>Wireless Networking</th>
+                <th>RAID Support</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% motherboards.forEach(mb => { %>
+            <tr>
+                <td><%= mb.Motherboard_Name %></td>
+                <td><%= mb.Manufacturer %></td>
+                <td><%= mb.Socket %></td>
+                <td><%= mb.Form_Factor %></td>
+                <td><%= mb.Chipset %></td>
+                <td><%= mb.Memory_Max %></td>
+                <td><%= mb.Memory_Type %></td>
+                <td><%= mb.Memory_Slots %></td>
+                <td><%= mb.Memory_Speed %></td>
+                <td><%= mb.PCIe_x16_Slots %></td>
+                <td><%= mb.SATA6_Gbs %></td>
+                <td><%= mb.Onboard_Ethernet %></td>
+                <td><%= mb.Onboard_Video %></td>
+                <td><%= mb.USB_2_0_Headers %></td>
+                <td><%= mb.USB_3_2_Gen_1_Headers %></td>
+                <td><%= mb.Supports_ECC ? 'Yes' : 'No' %></td>
+                <td><%= mb.Wireless_Networking %></td>
+                <td><%= mb.RAID_Support ? 'Yes' : 'No' %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

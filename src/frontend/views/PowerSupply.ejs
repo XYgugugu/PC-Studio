@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Supply Gallery</title>
+    <style>
+        body {
+            background-color: #fff; /* 白底 */
+            color: #000; /* 黑字 */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .powersupply-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .powersupply-table th, .powersupply-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .powersupply-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Power Supply Gallery</h1>
+    <table class="powersupply-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Model</th>
+                <th>Type</th>
+                <th>Efficiency Rating</th>
+                <th>Wattage (W)</th>
+                <th>Length (mm)</th>
+                <th>Modular</th>
+                <th>Fanless</th>
+                <th>ATX 4-Pin Connectors</th>
+                <th>EPS 8-Pin Connectors</th>
+                <th>PCIe 6+2-Pin Connectors</th>
+                <th>SATA Connectors</th>
+                <th>Molex 4-Pin Connectors</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% powersupplies.forEach(psu => { %>
+            <tr>
+                <td><%= psu.PowerSupply_Name %></td>
+                <td><%= psu.Manufacturer %></td>
+                <td><%= psu.Model %></td>
+                <td><%= psu.Type %></td>
+                <td><%= psu.Efficiency_Rating %></td>
+                <td><%= psu.Wattage %></td>
+                <td><%= psu.Length %></td>
+                <td><%= psu.Modular %></td>
+                <td><%= psu.Fanless ? 'Yes' : 'No' %></td>
+                <td><%= psu.ATX_4_Pin_Connectors %></td>
+                <td><%= psu.EPS_8_Pin_Connectors %></td>
+                <td><%= psu.PCIe_6_2_Pin_Connectors %></td>
+                <td><%= psu.SATA_Connectors %></td>
+                <td><%= psu.Molex_4_Pin_Connectors %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

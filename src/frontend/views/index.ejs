@@ -20,7 +20,7 @@
             left: 80px;
             width: 100%;
             height: 60px;
-            background-color: #fff;
+            background-color: #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -103,6 +103,7 @@
 			display: flex;
 			height: 50px;
 			width : 100%;
+			justify-content: left;
 			align-items: center;
 			pointer-events: none;
 			opacity: 0 
@@ -179,7 +180,7 @@
 		
 		.main-content {
 			position: relative; 
-			background-color: #eee;
+			background-color: #fff;
 			min-height: 100vh;
 			top: 60px;
 			Left: 80px; 
@@ -215,10 +216,20 @@
             </div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
+
+		<ul>
+            <li>
+                <a href="/customize">
+                    <i class='bx bxs-component'></i>
+                    <span class="nav-item">Customize</span>
+                </a>
+                <span class="tooltip">Customize</span>
+            </li>
+        </ul>
         
         <ul>
             <li>
-                <a href="CPU">
+                <a href="/CPU">
                     <i class='bx bxs-component'></i>
                     <span class="nav-item">CPU</span>
                 </a>
@@ -228,7 +239,7 @@
 
         <ul>
             <li>
-                <a href="CPU_Cooler">
+                <a href="/CPU_Cooler">
                     <i class='bx bxs-component'></i>
                     <span class="nav-item">CPU_Cooler</span>
                 </a>
@@ -268,11 +279,11 @@
 
         <ul>
             <li>
-                <a href="Memory">
+                <a href="RAM">
                     <i class='bx bxs-component'></i>
-                    <span class="nav-item">Memory</span>
+                    <span class="nav-item">RAM</span>
                 </a>
-                <span class="tooltip">Memory</span>
+                <span class="tooltip">RAM</span>
             </li>
         </ul>
 
@@ -289,10 +300,34 @@
     </div>
 
 	<div class="main-content">
-		<div class="container">
+		<% if (page === "home") { %>
+            <h1>Welcome to PC Studio</h1>
+        <% } else if (page === "customize") { %>
+			<%- include('customize'); %>
+			
+		<% } else if (page === "CPU") { %>
+			<%- include('CPU'); %>
+		<% } else if (page === "CPU_Cooler") { %>
+			<%- include('CPU_Cooler'); %>
+		<% } else if (page === "Motherboard") { %>
+			<%- include('Motherboard'); %>
+		<% } else if (page === "GPU") { %>
+			<%- include('GPU'); %>
+		<% } else if (page === "Storage") { %>
+			<%- include('Storage'); %>
+		<% } else if (page === "RAM") { %>
+			<%- include('RAM'); %>
+		<% } else if (page === "PowerSupply") { %>
+			<%- include('PowerSupply'); %>
+        <% } else { %>
+            <h1>404 - Page Not Found</h1>
+        <% } %>
+		<!-- <div class="container">
 			<h1>PC Studio</h1>
-		</div>
+		</div> -->
 	</div>
+	
+	
 
 	
 
