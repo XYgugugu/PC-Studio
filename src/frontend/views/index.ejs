@@ -201,9 +201,9 @@
         <div class="user">
             <img id="userImage" alt="User Profile Picture" class="userImage">
             <script>
-                const userImage = sessionStorage.getItem('user_image') || '../png/default.jpg';
+                const userImage = sessionStorage.getItem('user_image');
                 const imageElement = document.getElementById('userImage');
-                imageElement.src = userImage; 
+                imageElement.src = userImage || "default.png"; 
             </script>
         </div>
     </div>
@@ -304,7 +304,7 @@
             <h1>Welcome to PC Studio</h1>
         <% } else if (page === "customize") { %>
 			<%- include('customize'); %>
-			
+
 		<% } else if (page === "CPU") { %>
 			<%- include('CPU'); %>
 		<% } else if (page === "CPU_Cooler") { %>
