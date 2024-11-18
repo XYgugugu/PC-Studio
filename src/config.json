@@ -1,10 +1,12 @@
 {
     "frontend" : {
         "PORT": 5001,
+        "ip": "localhost",
         "login": "/login"
     },
     "backend" : {
         "PORT": 5002,
+        "ip": "34.56.124.135",
         "verify-google-token": {
             "route": "/api/oauth2",
             "url" : "/verify-token"

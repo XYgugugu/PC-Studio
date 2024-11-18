@@ -65,8 +65,7 @@
             console.log("Image URL: " + responsePayload.picture);
             console.log("Email: " + responsePayload.email);
 
-
-            fetch('http://localhost:5002/api/oauth2/verify-token', {
+            fetch(`http://34.56.124.135:5002/api/oauth2/verify-token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

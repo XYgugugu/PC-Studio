@@ -3,9 +3,12 @@ const config = require("../../config.json");
 const express = require("express");
 const app = express();
 require("dotenv").config();
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/../img'));
 
 require('dotenv').config();
+
+const backend_ip = config.backend.ip;
+const backend_port = config.backend.PORT;
 
 // Middleware
 app.set('view engine', 'ejs');
@@ -28,7 +31,7 @@ app.get("/customize", (req, res) => {
 const axios = require('axios');
 app.get('/CPU', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=CPU');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=CPU`);
         const data = response.data.data;
         res.render("index", { page: "CPU", cpus: data });
     } catch (error) {
@@ -39,7 +42,7 @@ app.get('/CPU', async (req, res) => {
 
 app.get('/CPU_Cooler', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=CPU_Cooler');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=CPU_Cooler`);
         const data = response.data.data; 
         res.render("index", { page: "CPU_Cooler", coolers: data });
         // res.render('CPU_Cooler', { coolers: data });
@@ -51,7 +54,7 @@ app.get('/CPU_Cooler', async (req, res) => {
 
 app.get('/Motherboard', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=Motherboard');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=Motherboard`);
         const data = response.data.data; 
         res.render("index", { page: "Motherboard", motherboards: data });
         // res.render('Motherboard', { motherboards: data });
@@ -63,7 +66,7 @@ app.get('/Motherboard', async (req, res) => {
 
 app.get('/PowerSupply', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=PowerSupply');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=PowerSupply`);
         const data = response.data.data; 
         res.render("index", { page: "PowerSupply", powersupplies: data });
     } catch (error) {
@@ -74,7 +77,7 @@ app.get('/PowerSupply', async (req, res) => {
 
 app.get('/RAM', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=RAM');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=RAM`);
         const data = response.data.data; 
         res.render("index", { page: "RAM", memories: data });
         // res.render('RAM', { memories: data });
@@ -86,7 +89,7 @@ app.get('/RAM', async (req, res) => {
 
 app.get('/Storage', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=Storage');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=Storage`);
         const data = response.data.data; 
         res.render("index", { page: "Storage", storages: data });
         // res.render('Storage', { storages: data });
@@ -98,7 +101,7 @@ app.get('/Storage', async (req, res) => {
 
 app.get('/GPU', async (req, res) => {
     try {
-        const response = await axios.get('http://34.56.124.135:5002/api/data/gallery?component=GPU');
+        const response = await axios.get(`http://${backend_ip}:${backend_port}/api/data/gallery?component=GPU`);
         const data = response.data.data; 
         // res.render('GPU', { gpus: data });
         res.render("index", { gpus: data, page: 'GPU' });
