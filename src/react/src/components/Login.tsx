@@ -36,8 +36,8 @@ const Login: React.FC = () => {
         console.log('Full Name: ', responsePayload.name);
         console.log('Image URL: ', responsePayload.picture);
         console.log('Email: ', responsePayload.email);
-
-        fetch('http://34.56.124.135:5002/api/oauth2/verify-token', {
+        
+        fetch('https://backend-service-454493332254.us-central1.run.app/api/oauth2/verify-token', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -55,6 +55,7 @@ const Login: React.FC = () => {
             }
         })
         .catch((error) => {
+            console.log('Authentication unsucceeded');
             console.error('Error:', error);
         });
     };

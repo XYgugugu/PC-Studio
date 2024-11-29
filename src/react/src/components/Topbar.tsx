@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import './Topbar.css';
+import "boxicons/css/boxicons.min.css";
 
-const Topbar: React.FC = () => {
-    const userImage = sessionStorage.getItem('user_image') || '../../img/user_image_default.png';
+interface TopbarProp {
+    active: boolean; 
+}
+
+const Topbar: React.FC<TopbarProps> = ({ active }) => {
+    const [userImage, setUserImage] = useState("../img/default.png");
+
+    useEffect(() => {
+        const storedImage = sessionStorage.getItem("user_image");
+        if (storedImage) {
+        setUserImage(storedImage);
+        }
+    }, []);
 
     return (
-        <div className="title">
-            <span className="toptitle">
-                PC Studio
-            </span>
+        <div className={`topbar ${active ? "active" : ""}`}>
+            <div className="title">
+                <span className="toptitle">PC Studio</span>
+            </div>
             <div className="user">
-                <img src={userImage} alt="User Profile" className="userImage"/>
+                <img
+                    id="userImage"
+                    src={userImage}
+                    alt="User Profile Picture"
+                    className="userImage"
+                />
             </div>
         </div>
     );

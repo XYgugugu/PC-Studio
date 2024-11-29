@@ -1,0 +1,24 @@
+body {
+    background-color: #fff; 
+    color: #000; 
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.cpu-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+.cpu-table th, .cpu-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+.cpu-table th {
+    background-color: #f4f4f4;
+}
