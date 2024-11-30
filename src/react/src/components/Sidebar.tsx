@@ -44,12 +44,12 @@ const Sidebar: React.FC<SidebarProp> = ({ active, toggleSidebar, onSelect}) => {
                     <span className="tooltip">CPU_Cooler</span>
                 </li>
 
-                <li onClick={() => onSelect("MotherBoard")}>
+                <li onClick={() => onSelect("Motherboard")}>
                     <div className="menu-item">
                         <i className="bx bxs-component"></i>
-                        <span className="nav-item">MotherBoard</span>
+                        <span className="nav-item">Motherboard</span>
                     </div>
-                    <span className="tooltip">MotherBoard</span>
+                    <span className="tooltip">Motherboard</span>
                 </li>
 
 

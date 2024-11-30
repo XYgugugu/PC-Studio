@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import CPU from "../pages/CPU";
 import "./Dashboard.css";
+import Components from "../pages/Components";
 
 const Index: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -12,29 +12,29 @@ const Index: React.FC = () => {
     setSidebarActive(!sidebarActive);
   };
 
-
-  const renderContent = () => {
+  // enable cache
+  const renderContent = useCallback(() => {
     switch (selectedSection) {
       case "Customize":
         return <h1>Welcome to the Customize Page!</h1>;
       case "CPU":
-        return <CPU />; 
+        return <Components componentType={"CPU"} />; 
       case "CPU_Cooler":
-        return <h1>Welcome to the CPU Cooler Page!</h1>;
-      case "MotherBoard":
-        return <h1>Welcome to the MotherBoard Page!</h1>;
+        return <Components componentType={"CPU_Cooler"} />; 
+      case "Motherboard":
+        return <Components componentType={"Motherboard"} />; 
       case "Storage":
-        return <h1>Welcome to the Storage Page!</h1>;
+        return <Components componentType={"Storage"} />; 
       case "GPU":
-        return <h1>Welcome to the GPU Page!</h1>;
+        return <Components componentType={"GPU"} />; 
       case "RAM":
-        return <h1>Welcome to the RAM Page!</h1>;
+        return <Components componentType={"RAM"} />; 
       case "PowerSupply":
-        return <h1>Welcome to the Power Supply Page!</h1>;
+        return <Components componentType={"PowerSupply"} />; 
       default:
         return <h1>Select a Section from the Sidebar</h1>;
     }
-  };
+  }, [selectedSection]);
 
   return (
     <div>

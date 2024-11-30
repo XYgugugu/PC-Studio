@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useTable } from "react-table";
-import './CPU.css';
+// import './Components.css';
 
 interface ComponentData {
   [key: string]: any;
 }
-
+interface ComponentType {
+    componentType: "CPU" | "GPU" | "CPU_Cooler" | "Motherboard" | "PowerSupply" | "RAM" | "Storage";
+}
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const bounce_interval = 2000; // 2s window to boune
 
-const CPU: React.FC = () => {
+const Components: React.FC<ComponentType> = ({ componentType }) => {
+
+    // handler for frequent request
+    const [debouncedComponentType, setDebouncedComponentType] = useState(componentType);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedComponentType(componentType);
+        }, 2000);
+        return () => clearTimeout(handler);
+    }, [componentType]);
+
     const [columns, setColumns] = useState<any[]>([]);
     const [data, setData] = useState<ComponentData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -16,9 +29,17 @@ const CPU: React.FC = () => {
 
     // Fetch data from the backend
     useEffect(() => {
+        if (!debouncedComponentType) return;
+        // reset
+        let isMounted = true
+        setLoading(true);
+        setColumns([]);
+        setData([]);
+        setError(null);
+
         // delay 1s before displaying table
         const delay = setTimeout(() => {
-            fetch(`${BACKEND_URL}/api/data/gallery?component=CPU`)
+            fetch(`${BACKEND_URL}/api/data/gallery?component=${componentType}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);
@@ -26,7 +47,7 @@ const CPU: React.FC = () => {
                 return response.json();
             })
             .then((res) => {
-                if (res.success) {
+                if (isMounted && res.success) {
                     const fetched_data = res.data;
                     const fetched_columns = Object.keys(fetched_data[0]).map((key) => ({
                         Header: key.replace(/_/g, " "),
@@ -38,20 +59,15 @@ const CPU: React.FC = () => {
                     setError(res.message);
                 }
             })
-            .catch((err) => {
-                console.error(`Error: ${err}`);
-                setError(err.message);
-            })
-            .finally(() => setLoading(false));
+            .catch((err) => isMounted && setError(err.message))
+            .finally(() => isMounted && setLoading(false));
         }, 1000);
 
-        return () => clearTimeout(delay);
-    }, []);
-
-    // @TODO: make some user-friendly info instead of pure err msg
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+        return () => {
+            clearTimeout(delay);
+            isMounted = false;
+        };
+    }, [componentType]); // add dependency for re-click
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
@@ -65,8 +81,8 @@ const CPU: React.FC = () => {
             :
             (
                 <div>
-                <h2>CPU Details</h2>
-                <p>This is the CPU page content.</p>
+                <h2>${componentType} Details</h2>
+                <p>This is the ${componentType} page content.</p>
                 <table {...getTableProps()} className="component-table">
                     <thead>
                     {headerGroups.map((headerGroup, index) => (
@@ -101,4 +117,4 @@ const CPU: React.FC = () => {
     );
 };
 
-export default CPU;
+export default Components;
