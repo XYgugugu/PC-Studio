@@ -13,12 +13,12 @@ const bounce_interval = 2000; // 2s window to boune
 
 const Components: React.FC<ComponentType> = ({ componentType }) => {
 
-    // handler for frequent request
+    // rapid request handler
     const [debouncedComponentType, setDebouncedComponentType] = useState(componentType);
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedComponentType(componentType);
-        }, 2000);
+        }, bounce_interval);
         return () => clearTimeout(handler);
     }, [componentType]);
 
