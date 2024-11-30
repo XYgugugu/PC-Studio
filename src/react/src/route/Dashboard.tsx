@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
-import Topbar from "./Topbar";
-import CPU from "../pages/CPU"; // Import the CPU component
-import "./Index.css";
+import Sidebar from "../components/Sidebar";
+import Topbar from "../components/Topbar";
+import CPU from "../pages/CPU";
+import "./Dashboard.css";
 
 const Index: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);

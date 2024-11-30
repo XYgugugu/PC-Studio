@@ -7,7 +7,7 @@ interface TopbarProp {
     active: boolean; 
 }
 
-const Topbar: React.FC<TopbarProps> = ({ active }) => {
+const Topbar: React.FC<TopbarProp> = ({ active }) => {
     const [userImage, setUserImage] = useState("../img/default.png");
 
     useEffect(() => {
