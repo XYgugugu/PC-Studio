@@ -4,7 +4,7 @@ import Topbar from "../components/Topbar";
 import "./Dashboard.css";
 import Components from "../pages/Components";
 
-const Index: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [selectedSection, setSelectedSection] = useState("Customize"); // Default section
 
@@ -51,4 +51,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default Dashboard;

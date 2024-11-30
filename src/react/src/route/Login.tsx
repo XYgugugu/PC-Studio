@@ -49,7 +49,7 @@ const Login: React.FC = () => {
             if (data.success) {
                 console.log('Authentication succeeded');
                 sessionStorage.setItem('user_image', data.user.profile);
-                window.location.href = '/index';
+                window.location.href = '/Dashboard';
             } else {
                 console.error('Authentication failed:', data.message);
             }
