@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import "./Dashboard.css";
 import Components from "../pages/Components";
+import Customize from "../pages/Customize";
 
 const Dashboard: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -16,7 +17,7 @@ const Dashboard: React.FC = () => {
   const renderContent = useCallback(() => {
     switch (selectedSection) {
       case "Customize":
-        return <h1>Welcome to the Customize Page!</h1>;
+        return <Customize/>;
       case "CPU":
         return <Components componentType={"CPU"} />; 
       case "CPU_Cooler":

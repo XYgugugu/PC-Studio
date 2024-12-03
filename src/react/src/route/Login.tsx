@@ -1,6 +1,7 @@
 import './Login.css';
 import React from "react";
 import { useEffect } from "react";
+import defaultImage from "../img/default.png";
 
 
 const Login: React.FC = () => {
@@ -48,7 +49,8 @@ const Login: React.FC = () => {
         .then((data) => {
             if (data.success) {
                 console.log('Authentication succeeded');
-                sessionStorage.setItem('user_image', data.user.profile);
+                const profileImage = data.user.profile || defaultImage;
+                sessionStorage.setItem('user_image', profileImage);
                 window.location.href = '/Dashboard';
             } else {
                 console.error('Authentication failed:', data.message);
