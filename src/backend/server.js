@@ -16,7 +16,7 @@ const corsOptions = {
         'http://34.56.124.135:5001',
         'https://private-service-454493332254.us-central1.run.app'
     ],
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'DELETE', 'POST'],
     allowedHeaders: ['Content-Type'],
 };
 app.use(cors(corsOptions));
@@ -27,6 +27,9 @@ app.use(config.backend['verify-google-token'].route, oauth2);
 
 const gallery = require('./routes/gallery');
 app.use(config.backend['item-gallery'].route, gallery);
+
+const userPCs =  require('./routes/userPCs');
+app.use(config.backend['user-pc'].route, userPCs);
 
 const PORT = config.backend.PORT || 8080;
 

@@ -12,6 +12,10 @@
         "item-gallery": {
             "route": "/api/data",
             "url": "/gallery"
+        },
+        "user-pc": {
+            "route": "/api/user",
+            "url": "/pcs"
         }
     }
 }
