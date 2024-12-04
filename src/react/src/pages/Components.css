@@ -5,20 +5,46 @@ body {
     margin: 0;
     padding: 20px;
 }
+
 h1 {
     text-align: center;
     margin-bottom: 20px;
 }
-.cpu-table {
+/* Ensure full width for main-content */
+.main-content {
+    width: 100%;
+    background-color: white; /* Apply white background to entire section */
+    padding: 20px; /* Optional: Add padding for better spacing */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    min-height: 100vh; /* Ensure it covers the full viewport height */
+    overflow-x: auto; /* Handle horizontal overflow */
+}
+
+/* Adjust layout when sidebar is active */
+.sidebar-active .main-content {
+    margin-left: 250px; /* Adjust this value based on your sidebar width */
+    transition: margin-left 0.3s ease; /* Smooth transition for sidebar activation */
+}
+
+/* Ensure images within main-content are positioned correctly */
+.main-content img {
+    max-width: 100%; /* Ensure images do not overflow the container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Ensure table fits within main-content */
+.component-table {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
 }
-.cpu-table th, .cpu-table td {
+
+.component-table th, .component-table td {
     border: 1px solid #000;
     padding: 8px;
     text-align: left;
 }
-.cpu-table th {
+
+.component-table th {
     background-color: #f4f4f4;
 }

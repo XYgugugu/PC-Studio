@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTable } from "react-table";
-// import './Components.css';
+import './Components.css';
 
 interface ComponentData {
   [key: string]: any;
@@ -10,6 +10,7 @@ interface ComponentType {
 }
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 const bounce_interval = 2000; // 2s window to boune
+const ITEMS_PER_PAGE = 50;
 
 const Components: React.FC<ComponentType> = ({ componentType }) => {
 
@@ -26,6 +27,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
     const [data, setData] = useState<ComponentData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     // Fetch data from the backend
     useEffect(() => {
@@ -71,8 +73,19 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+    };
+
+    const paginatedData = data.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+
     return (
-        <div>
+        <div className="main-content">
             {
                 loading ?
             (
@@ -110,6 +123,14 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                     })}
                     </tbody>
                 </table>
+                <div className="pagination">
+                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                    Previous
+                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage * ITEMS_PER_PAGE >= data.length}>
+                    Next
+                    </button>
+                </div>
                 </div>
             )
             }

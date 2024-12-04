@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import XJFT from "../img/XJFT.png";
+import "./Customize.css"; // Import the CSS file
 
 const CustomizeForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -21,30 +22,17 @@ const CustomizeForm: React.FC = () => {
   };
 
   return (
-    <div
-        style={{
-            textAlign: "center",
-            padding: "20px",
-            backgroundColor: "#fff",
-            minHeight: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: "0", // Ensures no offset from the sidebar
-        }}
-    >
-      <div className="logo" style={{ marginBottom: "20px" }}>
+    <div className="main-content">
+      <div className="logo">
         <img
           src={XJFT}
           alt="Logo_XJFT"
-          style={{ maxWidth: "200px", height: "auto" }}
         />
       </div>
 
-      <div className="container" style={{ width: "100%" }}>
+      <div className="container">
         <form onSubmit={handleSubmit}>
-          <div className="drawer" style={{ marginBottom: "10px" }}>
+          <div className="drawer">
             <label htmlFor="size">Size:</label>
             <select
               name="size"
@@ -59,7 +47,7 @@ const CustomizeForm: React.FC = () => {
             </select>
           </div>
 
-          <div className="drawer" style={{ marginBottom: "10px" }}>
+          <div className="drawer">
             <label htmlFor="prize">Prize:</label>
             <select
               name="prize"
@@ -70,10 +58,11 @@ const CustomizeForm: React.FC = () => {
               <option value="100">100</option>
               <option value="200">200</option>
               <option value="300">300</option>
+              <option value="400">400</option>
             </select>
           </div>
 
-          <div className="drawer" style={{ marginBottom: "10px" }}>
+          <div className="drawer">
             <label htmlFor="performance">Performance:</label>
             <select
               name="performance"
@@ -82,11 +71,13 @@ const CustomizeForm: React.FC = () => {
               onChange={handleInputChange}
             >
               <option value="3060">3060</option>
-              <option value="4090">4090</option>
+              <option value="3070">3070</option>
+              <option value="3080">3080</option>
+              <option value="3090">3090</option>
             </select>
           </div>
 
-          <div className="drawer" style={{ marginBottom: "10px" }}>
+          <div className="drawer">
             <label htmlFor="type">Type:</label>
             <select
               name="type"
@@ -94,17 +85,15 @@ const CustomizeForm: React.FC = () => {
               value={formData.type}
               onChange={handleInputChange}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+              <option value="1">Type 1</option>
+              <option value="2">Type 2</option>
+              <option value="3">Type 3</option>
+              <option value="4">Type 4</option>
             </select>
           </div>
 
-          <div className="button-container" style={{ marginTop: "20px" }}>
-            <button type="submit" style={{ padding: "10px 30px" }}>
-              Customize
-            </button>
+          <div className="button-container">
+            <button type="submit">Submit</button>
           </div>
         </form>
       </div>
