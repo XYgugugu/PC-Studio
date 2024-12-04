@@ -1,4 +1,4 @@
-*.png
 database/
 src/local/
 .env
+node_modules/

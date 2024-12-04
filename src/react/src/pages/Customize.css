@@ -1,0 +1,73 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-content {
+    position: relative;
+    background-color: #fff; /* White background */
+    min-height: 100vh; /* Full height of the viewport */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+    margin-left: 80px; /* Default left margin for sidebar (collapsed state) */
+}
+
+/* When the sidebar is active */
+.sidebar.active ~ .main-content {
+    margin-left: 250px; /* Adjust to the expanded width of the sidebar */
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo img {
+    max-width: 200px;
+    height: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px; /* Center content and limit width */
+    text-align: center; /* Center text */
+}
+
+.drawer {
+    margin-bottom: 10px;
+}
+
+.drawer label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.drawer select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.button-container button {
+    padding: 10px 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
