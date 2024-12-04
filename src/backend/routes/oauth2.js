@@ -1,6 +1,7 @@
 const express = require('express');
-const config = require("../../config.json");
+const config = require("../config.json");
 const { OAuth2Client } = require('google-auth-library');
+const querySQL = require('../SQL/sql');
 
 const router = express.Router();
 
@@ -8,11 +9,33 @@ const router = express.Router();
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(CLIENT_ID);
 
+// register incoming user (if new)
+function register_user(userId, userName, userEmail) {
+    const query = `
+        INSERT INTO User (user_id, name, email)
+        SELECT ?, ?, ?
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM User
+            WHERE user_id = ${userId}
+        )
+    `;
+    const params = [userId, userName, userEmail, userId];
+
+    querySQL(query, null, (err, res) => {
+        if (err) {
+            console.error(`Error registering user: ${err}`);
+        }
+        console.log(`User registered`);
+    }, params);
+}
+
 // verify credential
 router.post(config.backend['verify-google-token'].url, async (req, res) => {
     const credential = req.body.credential;
 
     if (!credential) {
+        console.error('Empty credential');
         return res.status(400).json({
             success: false,
             message: "Empty credential",
@@ -28,17 +51,21 @@ router.post(config.backend['verify-google-token'].url, async (req, res) => {
 
         const payload = ticket.getPayload();
         const userId = payload['sub'];
+        const userEmail = payload['email'];
+        const userName = payload['name'];
+        const userProfile = payload['picture'];
+        console.log(`User authorized`);
 
-        //@TODO：update user to database
+        register_user(userId, userName, userEmail);
 
         return res.status(200).json({
             success: true,
             message: "Succeed",
             user: {
                 userId: userId,
-                email: payload['email'],
-                name: payload['name'],
-                profile: payload['picture']
+                email: userEmail,
+                name: userName,
+                profile: userProfile
             }
         });
     } catch (error) {

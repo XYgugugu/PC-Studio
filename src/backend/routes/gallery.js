@@ -1,5 +1,5 @@
 const express = require('express');
-const config = require("../../config.json");
+const config = require("../config.json");
 const querySQL = require("../SQL/sql");
 
 const router = express.Router();
@@ -28,12 +28,11 @@ router.get(config.backend['item-gallery'].url, (req, res) => {
                 message: "Invalid SQL query"
             });
         }
-        console.log(result);
         return res.status(200).json({
             success: true,
             data: result
         });
-    });
+    }, []);
 });
 
 module.exports = router;

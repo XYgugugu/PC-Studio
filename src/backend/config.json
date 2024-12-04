@@ -1,0 +1,17 @@
+{
+    "frontend" : {
+        "PORT": 5001,
+        "login": "/login"
+    },
+    "backend" : {
+        "PORT": 8080,
+        "verify-google-token": {
+            "route": "/api/oauth2",
+            "url" : "/verify-token"
+        },
+        "item-gallery": {
+            "route": "/api/data",
+            "url": "/gallery"
+        }
+    }
+}
