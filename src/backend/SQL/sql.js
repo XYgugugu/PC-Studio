@@ -76,24 +76,27 @@ const waitForInput = (query) => {
 
 
 // function version of above
-function querySQL(qry, source, callback) {
+function querySQL(qry, source, callback, params = []) {
     require('dotenv').config();
     const connection = mysql.createConnection({
-        host: process.env.SQL_INSTANCE_IP,
+        // host: process.env.SQL_INSTANCE_IP,
         user: process.env.MYSQL_USER,
         password: process.env.MYSQL_PASSWORD,
-        database: process.env.DATABASE_NAME
+        database: process.env.DATABASE_NAME,
+        socketPath: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
     });
 
     connection.connect((err) => {
         if (err) {
+            console.error('Database Connection Error1:', err.message);
             return callback(err, null);
         }
         const cmd = qry || fs.readFileSync(source, 'utf8');
 
-        connection.query(cmd, (err, results) => {
+        connection.query(cmd, params, (err, results) => {
             connection.end();
             if (err) {
+                console.error('Database Connection Error2:', err.message);
                 return callback(err, null);
             }
             callback(null, results);

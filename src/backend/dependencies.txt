@@ -1,2 +1,4 @@
+express
 dotenv
 google-auth-library
+mysql2
