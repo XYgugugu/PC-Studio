@@ -32,7 +32,7 @@ router.get(config.backend['user-pc'].url, (req, res) => {
             success: true,
             data: result
         })
-    }, []);
+    }, params);
 });
 
 // delete certain PC(s) per request
