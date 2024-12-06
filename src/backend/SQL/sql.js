@@ -79,29 +79,59 @@ const waitForInput = (query) => {
 function querySQL(qry, source, callback, params = []) {
     require('dotenv').config();
     const connection = mysql.createConnection({
-        // host: process.env.SQL_INSTANCE_IP,
         user: process.env.MYSQL_USER,
         password: process.env.MYSQL_PASSWORD,
         database: process.env.DATABASE_NAME,
-        socketPath: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
+        socketPath: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
     });
 
     connection.connect((err) => {
         if (err) {
-            console.error('Database Connection Error1:', err.message);
+            console.error('Database Connection Error:', err.message);
             return callback(err, null);
         }
-        const cmd = qry || fs.readFileSync(source, 'utf8');
 
-        connection.query(cmd, params, (err, results) => {
-            connection.end();
-            if (err) {
-                console.error('Database Connection Error2:', err.message);
-                return callback(err, null);
+        const executeQueries = async () => {
+            try {
+                if (Array.isArray(qry)) {
+                    if (!Array.isArray(params) || qry.length !== params.length) {
+                        throw new Error("Invalid input parameter list");
+                    }
+                    const results = [];
+                    for (let i = 0; i < qry.length; i++) {
+                        const query = qry[i];
+                        const queryParams = params[i] || [];
+                        const result = await new Promise((resolve, reject) => {
+                            connection.query(query, queryParams, (err, res) => {
+                                if (err) reject(err);
+                                else resolve(res);
+                            });
+                        });
+                        results.push(result);
+                    }
+                    connection.end();
+                    callback(null, results);
+                } else {
+                    const cmd = qry || fs.readFileSync(source, 'utf8');
+                    connection.query(cmd, params, (err, results) => {
+                        connection.end();
+                        if (err) {
+                            console.error('SQL Error:', err.message);
+                            return callback(err, null);
+                        }
+                        callback(null, results);
+                    });
+                }
+            } catch (error) {
+                connection.end();
+                console.error('Execution Error:', error.message);
+                callback(error, null);
             }
-            callback(null, results);
-        });
+        };
+
+        executeQueries();
     });
 }
+
 
 module.exports = querySQL;
