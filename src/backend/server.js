@@ -34,6 +34,9 @@ app.use(config.backend['user-pc'].route, userPCs);
 const adminOP = require('./routes/admin');
 app.use(config.backend['admin-modify-price'].route, adminOP);
 
+const keywordSearch = require('./routes/search');
+app.use(config.backend['keyword-search'].route, keywordSearch);
+
 const PORT = config.backend.PORT || 8080;
 
 app.get('/', (req, res) => {

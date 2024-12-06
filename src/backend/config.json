@@ -17,6 +17,10 @@
             "route": "/api/user",
             "url": "/pcs"
         },
+        "keyword-search": {
+            "route": "/api/user",
+            "url": "/search"
+        },
         "admin-modify-price": {
             "route": "/api/admin",
             "url": "/price"
