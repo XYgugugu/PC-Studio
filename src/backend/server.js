@@ -16,7 +16,7 @@ const corsOptions = {
         'http://34.56.124.135:5001',
         'https://private-service-454493332254.us-central1.run.app'
     ],
-    methods: ['GET', 'DELETE', 'POST'],
+    methods: ['GET', 'PUT','DELETE', 'POST'],
     allowedHeaders: ['Content-Type'],
 };
 app.use(cors(corsOptions));
@@ -30,6 +30,9 @@ app.use(config.backend['item-gallery'].route, gallery);
 
 const userPCs =  require('./routes/userPCs');
 app.use(config.backend['user-pc'].route, userPCs);
+
+const adminOP = require('./routes/admin');
+app.use(config.backend['admin-modify-price'].route, adminOP);
 
 const PORT = config.backend.PORT || 8080;
 

@@ -16,6 +16,10 @@
         "user-pc": {
             "route": "/api/user",
             "url": "/pcs"
+        },
+        "admin-modify-price": {
+            "route": "/api/admin",
+            "url": "/price"
         }
     }
 }
