@@ -29,7 +29,27 @@ function register_user(userId, userName, userEmail) {
         console.log(`User registered`);
     }, params);
 }
-
+// check user admin status
+function adminStatus(user_id, callback){
+    const query = `
+        SELECT admin
+        FROM User
+        WHERE user_id = ?
+    `;
+    return new Promise((resolve, reject) => {
+        querySQL(query, null, (err, res) => {
+            if (err) {
+                console.log(`Error checking admin status for user ${user_id}`);
+                return reject(err);
+            }
+            if (res.length > 0) {
+                resolve(res[0].admin || 0);
+            } else {
+                resolve(0);
+            }
+        }, [user_id]);
+    });
+}
 // verify credential
 router.post(config.backend['verify-google-token'].url, async (req, res) => {
     const credential = req.body.credential;
@@ -58,6 +78,9 @@ router.post(config.backend['verify-google-token'].url, async (req, res) => {
 
         register_user(userId, userName, userEmail);
 
+        const isAdmin = await adminStatus(userId);
+        console.log(`Admin status: ${isAdmin}`);
+
         return res.status(200).json({
             success: true,
             message: "Succeed",
@@ -65,7 +88,8 @@ router.post(config.backend['verify-google-token'].url, async (req, res) => {
                 userId: userId,
                 email: userEmail,
                 name: userName,
-                profile: userProfile
+                profile: userProfile,
+                admin: isAdmin
             }
         });
     } catch (error) {
@@ -76,7 +100,6 @@ router.post(config.backend['verify-google-token'].url, async (req, res) => {
             user: null
         });
     }
-
 });
 
 module.exports = router;
