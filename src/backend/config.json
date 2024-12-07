@@ -24,6 +24,10 @@
         "admin-modify-price": {
             "route": "/api/admin",
             "url": "/price"
+        },
+        "verify-pc-price": {
+            "route": "/api/user",
+            "url": "/verify-pc"
         }
     }
 }
