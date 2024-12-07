@@ -5,22 +5,28 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+    background-color: #fff; 
+    min-height: 100vh; 
+    overflow: hidden; 
+}
+
 .main-content {
     position: relative;
-    background-color: #fff; /* White background */
-    min-height: 100vh; /* Full height of the viewport */
+    background-color: #fff; 
+    min-height: 100vh;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     transition: all 0.5s ease-in-out;
-    margin-left: 80px; /* Default left margin for sidebar (collapsed state) */
+    margin-left:40px; 
 }
 
 /* When the sidebar is active */
 .sidebar.active ~ .main-content {
-    margin-left: 250px; /* Adjust to the expanded width of the sidebar */
+    margin-left: 250px;
 }
 
 .logo {
@@ -34,8 +40,8 @@
 
 .container {
     width: 100%;
-    max-width: 600px; /* Center content and limit width */
-    text-align: center; /* Center text */
+    max-width: 600px; 
+    text-align: center; 
 }
 
 .drawer {
@@ -43,6 +49,7 @@
 }
 
 .drawer label {
+    font-size: 1.2rem; 
     display: block;
     margin-bottom: 5px;
 }
@@ -50,8 +57,28 @@
 .drawer select {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #090909;
     border-radius: 4px;
+}
+
+.drawer input {
+    font-size: 1rem; 
+    padding: 12px;
+    border: 1px solid #000; 
+    border-radius: 4px; 
+    width: 100%; 
+    background-color: #fff;
+    color: #000; 
+    box-shadow: none; 
+    transition: border-color 0.3s ease; 
+}
+
+.drawer input:focus {
+    border-color: #000; 
+    background-color: #fff;
+    color: #000; 
+    outline: none; 
+    box-shadow: none; 
 }
 
 .button-container {
@@ -60,7 +87,7 @@
 
 .button-container button {
     padding: 10px 30px;
-    background-color: #007bff;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -68,6 +95,41 @@
     transition: background-color 0.3s ease;
 }
 
+.button-container button:first-child {
+    margin-right: 10px; 
+  }
+  
+
 .button-container button:hover {
     background-color: #0056b3;
 }
+
+.table-container {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px; 
+    background-color: #fff;
+    overflow-x: auto; 
+    overflow-y: auto; 
+    max-height: 450px;
+    padding-bottom: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%; 
+    background-color: #fff; 
+}
+  
+  table, th, td {
+    border: 1px solid black; 
+  }
+  
+  th, td {
+    padding: 8px; 
+    text-align: left; 
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
