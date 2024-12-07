@@ -23,11 +23,10 @@ router.put(config.backend['verify-pc'].url, async (req, res) => {
 
     const userId = req.query.userId;
     const pcId = req.query.pcId;
-    const operationMode = req.query.operationMode;
 
 
-    if (operationMode !== null && operationMode !== undefined) {
-        const params = [pcId, userId, CPU, CPU_Price, CPU_Cooler, CPU_Cooler_Price, GPU, GPU_Price, Motherboard, Motherboard_Price, Powersupply, Powersupply_Price, RAM, RAM_Price, Storage, Storage_Price, operationMode === 'create' ? 0 : 1];
+    if (userId !== null && userId !== undefined) {
+        const params = [pcId, userId, CPU, CPU_Price, CPU_Cooler, CPU_Cooler_Price, GPU, GPU_Price, Motherboard, Motherboard_Price, Powersupply, Powersupply_Price, RAM, RAM_Price, Storage, Storage_Price];
         const query = `Call CreateUpdatePC(${Array(params.length).fill('?').join(', ')})`;        
         
         querySQL(query, null, (err, result) => {
@@ -55,7 +54,7 @@ router.put(config.backend['verify-pc'].url, async (req, res) => {
         const resultCompatibility = await querySQLAsync(query1, params1);
         const isCompatible = resultCompatibility[0]?.[0]?.compatible_flag;
         console.log(`Compatibility result: ${isCompatible}`);
-        if (!compatibility) {
+        if (!isCompatible) {
             return res.status(200).json({
                 success: false,
                 message: "Components are not compatible"
