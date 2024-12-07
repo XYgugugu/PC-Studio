@@ -3,20 +3,17 @@ import './Sidebar.css';
 import "boxicons/css/boxicons.min.css";
 
 interface SidebarProp {
-    active: boolean;
-    toggleSidebar: () => void;
     onSelect: (section: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProp> = ({ active, toggleSidebar, onSelect}) => {
+const Sidebar: React.FC<SidebarProp> = ({ onSelect }) => {
     return (
-        <div className={`sidebar ${active ? "active" : ""}`}>
-            <div className = "top">
-                <div className = "logo">
+        <div className="sidebar">
+            <div className="top">
+                <div className="logo">
                     <i className='bx bx-laptop'></i>
                     <span>PCStudio</span>
                 </div>
-                <i className='bx bx-menu' id="btn" onClick={toggleSidebar}></i>
             </div>
 
             <ul>
@@ -52,7 +49,6 @@ const Sidebar: React.FC<SidebarProp> = ({ active, toggleSidebar, onSelect}) => {
                     <span className="tooltip">Motherboard</span>
                 </li>
 
-
                 <li onClick={() => onSelect("Storage")}>
                     <div className="menu-item">
                         <i className="bx bxs-component"></i>
@@ -84,11 +80,9 @@ const Sidebar: React.FC<SidebarProp> = ({ active, toggleSidebar, onSelect}) => {
                     </div>
                     <span className="tooltip">PowerSupply</span>
                 </li>
-
-            
             </ul>
-
         </div>
     );
 };
+
 export default Sidebar;

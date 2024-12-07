@@ -3,43 +3,13 @@
     top: 0;
     left: 0;
     height: 100vh;
-    width: 80px;
+    width: 250px; /* Set to active width */
     background-color: #12171e;
     padding: 0.4rem 0.8rem;
-    transition: all 0.5s ease;
     z-index: 20;
 }	
 
-.sidebar.active {
-    width: 250px;
-}
-
-.sidebar.active ~ .main-content {
-    left: 250px;
-    width: calc(100% - 250px); 
-}
-
-.sidebar.active ~ .topbar {
-    left: 250px;
-    width: calc(100% - 250px); 
-}
-
-
-.sidebar #btn {
-    position: absolute;
-    color: #fff;
-    top: .4rem;
-    left: 50%;
-    font-size: 1.2rem;
-    line-height: 50px;
-    transform: translateX(-50%);
-    cursor: pointer;
-}
-
-.sidebar.active #btn {
-    left: 90%;
-}
-
+/* Remove the active class as it is no longer needed */
 .sidebar .top .logo {
     color: #fff;
     display: flex;
@@ -48,11 +18,7 @@
     justify-content: left;
     align-items: center;
     pointer-events: none;
-    opacity: 0 
-}
-
-.sidebar.active .top .logo {
-    opacity: 1;
+    opacity: 1; /* Always visible */
     margin-left: 20px;
 }
 
@@ -92,30 +58,9 @@
 }
 
 .sidebar .nav-item {
-    opacity: 0;
-}
-
-.sidebar.active .nav-item {
-    opacity: 1;
+    opacity: 1; /* Always visible */
 }
 
 .sidebar ul li .tooltip {
-    position: absolute;
-    left: 125px;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
-    border-radius: •6rem; 
-    padding: .4rem 1.2rem; 
-    line-height: 1.8rem; 
-    z-index: 20; 
-    opacity: 0;
-}
-
-.sidebar ul li:hover .tooltip {
-    opacity: 1;
-}
-
-.sidebar.active ul li:hover .tooltip {
-    display: none;
+    display: none; /* Hide tooltips as they are no longer needed */
 }

@@ -1,15 +1,16 @@
 .topbar {
     position: fixed;
     top: 0;
-    left: 80px;
-    width: 100%;
+    left: 250px; /* Adjust to the active sidebar width */
+    width: calc(100% - 250px); /* Adjust width to account for sidebar */
     height: 60px;
     background-color: #eee;
     display: flex;
     justify-content: space-between;
+    transition: all 0.5s ease;
     align-items: center;
     padding: 0 20px;
-    z-index: 10;
+    z-index: 1100; /* Ensure topbar is above other elements, including sidebar */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -19,11 +20,6 @@
     color: #000; 
     opacity: 1;
 }
-
-/* .topbar.active .toptitle {
-    opacity: 0;
-} */
-
 
 .logo-text {
     font-size: 18px;
@@ -37,5 +33,6 @@
     border-radius: 100%; 
     border: 1px solid #eee; 
     object-fit: cover;
-    margin-right: 80px; 
+    margin-right: 20px; 
 }
+
