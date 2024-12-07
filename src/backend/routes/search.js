@@ -7,8 +7,9 @@ const router = express.Router();
 router.get(config.backend['keyword-search'].url, (req, res) => {
     const componentType = req.query.componentType;
     const keyword = req.query.keyword;
+    const fullFeatureMode = req.query.fullFeatureMode;
 
-    const query = `Call ComponentKeywordSearch(?, ?)`;
+    const query = (fullFeatureMode != 0) ? `Call ComponentKeywordSearchFullInfo(?, ?)` : `Call ComponentKeywordSearchPriceOnly(?, ?)`;
     const params = [componentType, keyword];
 
     querySQL(query, null, (err, result) => {
@@ -18,11 +19,6 @@ router.get(config.backend['keyword-search'].url, (req, res) => {
                 success: false,
                 message: `Error searching keyword (${keyword}) on ${componentType}`
             });
-        }
-        try {
-            console.log(`Result length: ${result.length}`);   
-        } catch (error) {
-            
         }
         return res.status(200).json({
             success: true,
