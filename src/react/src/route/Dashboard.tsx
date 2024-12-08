@@ -5,6 +5,7 @@ import "./Dashboard.css";
 import Components from "../pages/Components";
 import Customize from "../pages/Customize";
 import PClist from "../pages/PClist";
+import Manufacturer from "../pages/Manufacturer";
 
 const Dashboard: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -35,6 +36,8 @@ const Dashboard: React.FC = () => {
         return <Components componentType={"PowerSupply"} />; 
       case "PClist":
         return <PClist/>;
+      case "Manufacturer":
+        return <Manufacturer/>;
       default:
         return <h1>Select a Section from the Sidebar</h1>;
     }
