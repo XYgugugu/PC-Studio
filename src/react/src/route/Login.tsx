@@ -1,11 +1,11 @@
 import './Login.css';
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import defaultImage from "../img/default.png";
-
+import { config } from '../config';
 
 const Login: React.FC = () => {
-    const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'missing!';
+    const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || config.GOOGLE_CLIENT_ID;
+
 
     useEffect(() => {
         const initGoogleSignin = () => {

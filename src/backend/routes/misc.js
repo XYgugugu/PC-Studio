@@ -4,14 +4,12 @@ const { querySQL } = require("../SQL/sql");
 
 const router = express.Router();
 
-router.get(config.backend['keyword-search'].url, (req, res) => {
-    const componentType = req.query.componentType;
-    const keyword = req.query.keyword;
-    const fullFeatureMode = req.query.fullFeatureMode;
+// miscellaneous
 
-    const query = (fullFeatureMode != 0) ? `Call ComponentKeywordSearchFullInfo(?, ?)` : `Call ComponentKeywordSearchPriceOnly(?, ?)`;
-    const params = [componentType, keyword];
+// rank manufacturer by product counts
 
+router.get(config.backend['manufacturer-product-count-rank'].url, (req, res) => {
+    const query = `Call RankManufacturerByProductCount()`;
     querySQL(query, null, (err, result) => {
         if (err) {
             console.log(`Error searching keyword (${keyword}) on ${componentType}`);
@@ -24,7 +22,5 @@ router.get(config.backend['keyword-search'].url, (req, res) => {
             success: true,
             data: result
         });
-    }, params);
+    }, []);
 });
-
-module.exports = router;

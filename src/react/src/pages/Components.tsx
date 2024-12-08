@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTable } from "react-table";
 import './Components.css';
 import "boxicons/css/boxicons.min.css";
+import { config } from "../config";
 
 interface ComponentData {
   [key: string]: any;
@@ -10,7 +11,7 @@ interface ComponentType {
     componentType: "CPU" | "GPU" | "CPU_Cooler" | "Motherboard" | "PowerSupply" | "RAM" | "Storage";
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || config.BACKEND_URL;
 const bounce_interval = 2000; // 2s debounce window
 
 const Components: React.FC<ComponentType> = ({ componentType }) => {
@@ -78,8 +79,8 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       } else {
         setError(res.message);
       }
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      if (err instanceof Error) { setError(err.message); }
     } finally {
       setLoading(false);
     }
@@ -117,8 +118,8 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       } else {
         setError(res.message);
       }
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      if (err instanceof Error) {setError(err.message);}
     } finally {
       setLoading(false);
     }
@@ -221,7 +222,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                   {headerGroups.map((headerGroup, index) => (
                     <tr {...headerGroup.getHeaderGroupProps()} key={`header-${index}`}>
                       {headerGroup.headers.map((col, colIndex) => (
-                        col.show && (
+                        (col as any).show && (
                           <th {...col.getHeaderProps()} key={`col-${colIndex}`} style={{ width: '150px' }}>
                             {col.render("Header")}
                           </th>
@@ -241,7 +242,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                           style={{ cursor: "pointer" }}
                         >
                           {row.cells.map((cell, cellIndex) => (
-                            cell.column.show && (
+                            (cell.column as any).show && (
                               <td {...cell.getCellProps()} key={`cell-${cellIndex}`} style={{ width: '150px' }}>
                                 {cell.render("Cell")}
                               </td>

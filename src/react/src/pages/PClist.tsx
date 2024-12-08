@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./PClist.css"; 
+import { config } from "../config";
 
 interface PCOrder {
   id: number;
@@ -7,7 +8,7 @@ interface PCOrder {
   totalPrice: number; 
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || ''; 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || config.BACKEND_URL; 
 
 const OrdersPage: React.FC = () => {
   const [orders, setOrders] = useState<PCOrder[]>([]);

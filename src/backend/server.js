@@ -8,14 +8,19 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-    origin: [
-        `http://localhost:${config.frontend.PORT}`,
-        'http://localhost:5137',
-        'http://localhost:5173',
-        'http://34.56.124.135:5000',
-        'http://34.56.124.135:5001',
-        'https://private-service-454493332254.us-central1.run.app'
-    ],
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            /^http:\/\/localhost(:\d+)?$/,
+            /^http:\/\/34\.56\.124\.135(:\d+)?$/,
+            /^https:\/\/frontend-service-454493332254\.us-central1\.run\.app$/
+        ];
+    
+        if (origin === undefined || allowedOrigins.some((regex) => regex.test(origin))) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'PUT','DELETE', 'POST'],
     allowedHeaders: ['Content-Type'],
 };
@@ -39,6 +44,9 @@ app.use(config.backend['keyword-search'].route, keywordSearch);
 
 const updatePC = require('./routes/updatePC');
 app.use(config.backend['update-pc'].route, updatePC);
+
+const recommendPC = require('./routes/recommend');
+app.use(config.backend['recommend-pc'].route, recommendPC);
 
 const PORT = config.backend.PORT || 8080;
 

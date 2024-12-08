@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './Manufacturer.css';
+import { config } from '../config';
 
 interface TableRow {
   [key: string]: any; 
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || config.BACKEND_URL;
 
 const Manufacturer: React.FC = () => {
   const [tableData, setTableData] = useState<TableRow[]>([]);

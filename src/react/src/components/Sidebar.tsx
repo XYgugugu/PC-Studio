@@ -3,6 +3,8 @@ import './Sidebar.css';
 import "boxicons/css/boxicons.min.css";
 
 interface SidebarProp {
+    active: boolean;
+    toggleSidebar: () => void;
     onSelect: (section: string) => void;
 }
 
