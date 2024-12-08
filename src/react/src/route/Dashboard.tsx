@@ -4,6 +4,7 @@ import Topbar from "../components/Topbar";
 import "./Dashboard.css";
 import Components from "../pages/Components";
 import Customize from "../pages/Customize";
+import PClist from "../pages/PClist";
 
 const Dashboard: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -32,6 +33,8 @@ const Dashboard: React.FC = () => {
         return <Components componentType={"RAM"} />; 
       case "PowerSupply":
         return <Components componentType={"PowerSupply"} />; 
+      case "PClist":
+        return <PClist/>;
       default:
         return <h1>Select a Section from the Sidebar</h1>;
     }

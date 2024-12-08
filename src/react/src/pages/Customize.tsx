@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import XJFT from "../img/XJFT.png";
 import "./Customize.css"; // Import the CSS file
+import "../route/Login";
 
 const CustomizeForm: React.FC = () => {
   const components = [
@@ -23,6 +24,7 @@ const CustomizeForm: React.FC = () => {
   const [finalConfig, setFinalConfig] = useState<
     { component: string; name: string; price: number }[] | null
   >(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const currentComponent = components[currentComponentIndex];
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
@@ -79,6 +81,7 @@ const CustomizeForm: React.FC = () => {
     }
   };
 
+  
   const handleUpload = async () => {
     setLoading(true);
     try {
@@ -88,11 +91,11 @@ const CustomizeForm: React.FC = () => {
           const response = await fetch(
             `${BACKEND_URL}/api/user/search?componentType=${component.component}&keyword=${component.name}&fullFeatureMode=1`
           );
-
+  
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-
+  
           const result = await response.json();
           if (result.success && Array.isArray(result.data) && Array.isArray(result.data[0])) {
             const matchedItem = result.data[0].find(
@@ -101,7 +104,7 @@ const CustomizeForm: React.FC = () => {
                 item["Memory_Name"] === component.name ||
                 item["Cooler_Name"] === component.name
             );
-
+  
             if (matchedItem) {
               const newPrice = matchedItem.Price;
               console.log(`Updated price for ${component.name}:`, newPrice);
@@ -111,11 +114,11 @@ const CustomizeForm: React.FC = () => {
               };
             }
           }
-
-          return component;
+  
+          return component; 
         })
       );
-
+  
       setFinalConfig(updatedComponents);
       console.log("Updated configuration:", updatedComponents);
     } catch (error) {
@@ -132,7 +135,64 @@ const CustomizeForm: React.FC = () => {
     setCurrentComponentIndex(0);
     setFormData("");
     setFinalConfig(null);
+    setErrorMessage(null);
   };
+
+
+  const handleConfirmOrder = async () => {
+    setLoading(true);
+    try {
+
+      if (!finalConfig || finalConfig.length !== 7) {
+        setErrorMessage("Configuration incomplete. Please select all components.");
+        console.error("Configuration incomplete. Missing components.");
+        return;
+      }
+  
+      const userId = sessionStorage.getItem("user_id");
+      if (!userId) {
+        setErrorMessage("User ID not found. Please log in again.");
+        console.error("User ID not found in sessionStorage.");
+        return;
+      }
+  
+      const baseUrl =
+        `${BACKEND_URL}/api/user/pc/update`;
+  
+      const componentParams = finalConfig
+        .map(
+          (component) =>
+            `${component.component}=${encodeURIComponent(component.name)}`
+        )
+        .join("&");
+  
+      const priceParams = finalConfig
+        .map(
+          (component) =>
+            `${component.component}_Price=${component.price.toFixed(2)}`
+        )
+        .join("&");
+  
+      const fullUrl = `${baseUrl}?${componentParams}&${priceParams}&userId=${userId}`;
+      console.log("Generated URL:", fullUrl);
+  
+      const response = await fetch(fullUrl, { method: "PUT" });
+  
+      const result = await response.json();
+  
+      if (!result.success) {
+        setErrorMessage(result.message.sqlMessage + " Please try again.");
+      } else {
+        alert("Order confirmed successfully!");
+        handleReturn();
+      }
+    } catch (error) {
+      console.error("Error confirming order:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const calculateTotalPrice = () => {
     if (!finalConfig) return 0;
@@ -173,12 +233,19 @@ const CustomizeForm: React.FC = () => {
             </table>
             <div className="button-container">
               <button onClick={handleUpload} disabled={loading}>
-                {loading ? "Updating Prices..." : "Upload"}
+                {loading ? "Updating new Prices..." : "Refresh Price"}
               </button>
-              <button onClick={handleReturn}>Return</button>
+              <button onClick={handleConfirmOrder}>Confirm Order</button>
             </div>
+            {errorMessage && (
+              <div className="error-message">
+                <p>{errorMessage}</p>
+                <button onClick={handleReturn}>Return to Start</button>
+              </div>
+            )}
           </div>
         ) : apiResult ? (
+          apiResult.length > 0 ? (
           <div>
             <h2>Select {currentComponent}</h2>
             <div className="table-container">
@@ -225,6 +292,32 @@ const CustomizeForm: React.FC = () => {
             </table>
             </div>
           </div>
+          ) : (
+            // Display message for empty results
+            <div>
+              <h2>No results found for {currentComponent}</h2>
+              <p>Please modify your search and try again.</p>
+              <form onSubmit={handleSubmit}>
+                <div className="drawer">
+                  <label htmlFor={currentComponent}>{currentComponent}:</label>
+                  <input
+                    type="text"
+                    name={currentComponent}
+                    id={currentComponent}
+                    value={formData}
+                    onChange={handleInputChange}
+                    placeholder={`Enter ${currentComponent} info`}
+                  />
+                </div>
+  
+                <div className="button-container">
+                  <button type="submit" disabled={loading}>
+                    {loading ? "Submitting..." : "Search Again"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="drawer">

@@ -51,6 +51,7 @@ const Login: React.FC = () => {
                 console.log('Authentication succeeded');
                 const profileImage = data.user.profile || defaultImage;
                 sessionStorage.setItem('user_image', profileImage);
+                sessionStorage.setItem('user_id', data.user.userId);
                 window.location.href = '/Dashboard';
             } else {
                 console.error('Authentication failed:', data.message);

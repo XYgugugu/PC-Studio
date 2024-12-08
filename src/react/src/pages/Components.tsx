@@ -28,6 +28,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    console.log(error)
 
     // Fetch data from the backend
     useEffect(() => {
@@ -82,6 +83,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
     };
 
     const paginatedData = data.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    console.log(paginatedData)
 
 
     return (
