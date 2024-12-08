@@ -4,8 +4,10 @@ import Topbar from "../components/Topbar";
 import "./Dashboard.css";
 import Components from "../pages/Components";
 import Customize from "../pages/Customize";
+import Function from "../pages/Function";
 import PClist from "../pages/PClist";
 import Manufacturer from "../pages/Manufacturer";
+
 
 const Dashboard: React.FC = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -34,6 +36,8 @@ const Dashboard: React.FC = () => {
         return <Components componentType={"RAM"} />; 
       case "PowerSupply":
         return <Components componentType={"PowerSupply"} />; 
+      case "Function":
+        return <Function/>;
       case "PClist":
         return <PClist/>;
       case "Manufacturer":

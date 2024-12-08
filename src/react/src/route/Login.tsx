@@ -32,7 +32,7 @@ const Login: React.FC = () => {
     const handleCredentialResponse = (response: any) => {
         console.log('Signed in');
         const responsePayload = decodeJwtResponse(response.credential);
-
+        console.log('Token: ', response.credential);
         console.log('ID: ', responsePayload.sub);
         console.log('Full Name: ', responsePayload.name);
         console.log('Image URL: ', responsePayload.picture);
@@ -50,8 +50,11 @@ const Login: React.FC = () => {
             if (data.success) {
                 console.log('Authentication succeeded');
                 const profileImage = data.user.profile || defaultImage;
+                const profileAdmin = data.user.admin;
                 sessionStorage.setItem('user_image', profileImage);
                 sessionStorage.setItem('user_id', data.user.userId);
+                sessionStorage.setItem('user_admin', profileAdmin);
+                console.log('Admin: ', profileAdmin);
                 window.location.href = '/Dashboard';
             } else {
                 console.error('Authentication failed:', data.message);
