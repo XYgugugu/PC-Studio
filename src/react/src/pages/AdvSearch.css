@@ -36,6 +36,12 @@ box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
     border-radius: 6px;
 }
 
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
 
 .button-container {
     display: flex;

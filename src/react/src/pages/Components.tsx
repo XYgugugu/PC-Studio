@@ -203,7 +203,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
   };
 
   return (
-    <div className="main-content">
+    <div className="component-content">
       {loading ? (
         <h2>Loading</h2>
       ) : (
@@ -214,7 +214,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
             <form onSubmit={handleSearch} className="search-bar">
               <input
                 type="text"
-                placeholder="Search by name..."
+                placeholder="..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

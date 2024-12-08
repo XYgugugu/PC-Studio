@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./AdvSearch.css"; 
+import { config } from "../config";
 
 interface AdvSearchResult {
   result_id: number;
@@ -7,7 +8,7 @@ interface AdvSearchResult {
 }
 
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || config.BACKEND_URL;
 
 const AdvSearch: React.FC = () => {
   const [searchData, setSearchData] = useState({

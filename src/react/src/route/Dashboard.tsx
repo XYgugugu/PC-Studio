@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
         onSelect={setSelectedSection} // Callback to update selected section
       />
       <Topbar active={sidebarActive} />
-      <div className={`main-content ${sidebarActive ? "active" : ""}`}>
+      <div className="main-content">
         {renderContent()} {/* Render the selected content */}
       </div>
     </div>
