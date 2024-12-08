@@ -11,8 +11,7 @@ router.put(config.backend['admin-modify-price'].url, (req, res) => {
     const itemName = req.query.itemName;
     const updatedPrice = req.query.price;
     const forceOverride = req.query.forceOverride || false;
-    // verify admin (placeholder for later)
-    
+
     // update
     const procedure = getStoredProcedure(componentType);
     if (!procedure) {
@@ -23,10 +22,10 @@ router.put(config.backend['admin-modify-price'].url, (req, res) => {
         });
     }
     const query = [
-        `Call ${procedure}(?, ?, ?, @status);`,
+        `Call ${procedure}(?, ?, ?, ?, @status);`,
         `SELECT @status AS status;`];
 
-    const params = [[itemName, updatedPrice, forceOverride], []];
+    const params = [[userId, itemName, updatedPrice, forceOverride], []];
 
     querySQL(query, null, (err, result) => {
         if (err) {
@@ -46,7 +45,7 @@ router.put(config.backend['admin-modify-price'].url, (req, res) => {
         } else {
             return res.status(200).json({
                 success: false,
-                message: "Failed due to invalid price rejected by constrains"
+                message: "Failed due to invalid price rejected by constraints"
             })
         }
     }, params);
