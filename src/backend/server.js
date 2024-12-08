@@ -48,8 +48,8 @@ app.use(config.backend['update-pc'].route, updatePC);
 const recommendPC = require('./routes/recommend');
 app.use(config.backend['recommend-pc'].route, recommendPC);
 
-const misc = require('./routes/misc');
-app.use(config.backend['manufacturer-product-count-rank'].route, misc);
+const misc_manufacturer = require('./routes/misc');
+app.use(config.backend['manufacturer-product-count-rank'].route, misc_manufacturer);
 
 const PORT = config.backend.PORT || 8080;
 

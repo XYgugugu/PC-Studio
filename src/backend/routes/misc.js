@@ -24,3 +24,5 @@ router.get(config.backend['manufacturer-product-count-rank'].url, (req, res) => 
         });
     }, []);
 });
+
+module.exports = router;
