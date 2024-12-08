@@ -4,7 +4,6 @@ import defaultImage from "../img/default.png";
 import { config } from '../config';
 
 const Login: React.FC = () => {
-    // const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'missing!';
     const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || config.GOOGLE_CLIENT_ID;
 
 

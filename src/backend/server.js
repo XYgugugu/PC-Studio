@@ -9,12 +9,13 @@ app.use(express.json());
 
 const corsOptions = {
     origin: (origin, callback) => {
-        if (
-            origin === undefined || // requests without origin (e.g., Postman)
-            /^http:\/\/localhost(:\d+)?$/.test(origin) || // localhost
-            /^http:\/\/34\.56\.124\.135(:\d+)?$/.test(origin) || // VM ip
-            origin === "https://frontend-service-454493332254.us-central1.run.app/"
-        ) {
+        const allowedOrigins = [
+            /^http:\/\/localhost(:\d+)?$/,
+            /^http:\/\/34\.56\.124\.135(:\d+)?$/,
+            /^https:\/\/frontend-service-454493332254\.us-central1\.run\.app$/
+        ];
+    
+        if (origin === undefined || allowedOrigins.some((regex) => regex.test(origin))) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));

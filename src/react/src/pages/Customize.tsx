@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import XJFT from "../img/XJFT.png";
 import "./Customize.css"; // Import the CSS file
 import "../route/Login";
+import { config } from "../config";
 
 const CustomizeForm: React.FC = () => {
   const components = [
@@ -27,7 +28,7 @@ const CustomizeForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const currentComponent = components[currentComponentIndex];
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || config.BACKEND_URL;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(event.target.value);

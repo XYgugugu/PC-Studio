@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTable } from "react-table";
 import './Components.css';
 import "boxicons/css/boxicons.min.css";
+import { config } from "../config";
 
 interface ComponentData {
   [key: string]: any;
@@ -10,7 +11,7 @@ interface ComponentType {
     componentType: "CPU" | "GPU" | "CPU_Cooler" | "Motherboard" | "PowerSupply" | "RAM" | "Storage";
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || config.BACKEND_URL;
 const bounce_interval = 2000; // 2s debounce window
 
 const Components: React.FC<ComponentType> = ({ componentType }) => {

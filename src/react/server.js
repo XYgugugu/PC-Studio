@@ -4,13 +4,10 @@ import { fileURLToPath } from 'url';
 
 const app = express();
 
-// app.use(express.json());
-// app.use(express.static('react/dist'));
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const staticPath = path.join(__dirname, 'dist');
+
 app.use(express.static(staticPath));
 
 app.get('*', (req, res) => {
@@ -20,6 +17,5 @@ app.get('*', (req, res) => {
 const port = 8080;
 
 app.listen(port, () => {
-    console.log(`Web served on port ${port}`);
+    console.log(`Server is running on port ${port}`);
 });
-
