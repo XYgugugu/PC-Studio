@@ -3,13 +3,15 @@
     top: 0;
     left: 0;
     height: 100vh;
-    width: 250px; /* Set to active width */
+    width: 250px;
     background-color: #12171e;
     padding: 0.4rem 0.8rem;
     z-index: 20;
+    overflow-x: hidden;
+    overflow-y: auto;
 }	
 
-/* Remove the active class as it is no longer needed */
+
 .sidebar .top .logo {
     color: #fff;
     display: flex;
@@ -58,9 +60,9 @@
 }
 
 .sidebar .nav-item {
-    opacity: 1; /* Always visible */
+    opacity: 1;
 }
 
 .sidebar ul li .tooltip {
-    display: none; /* Hide tooltips as they are no longer needed */
+    display: none;
 }
