@@ -3,9 +3,11 @@ import './Topbar.css';
 import "boxicons/css/boxicons.min.css";
 import defaultImage from "../img/default.png";
 
+interface TopbarProp {
+    active: boolean;
+  }
 
-
-const Topbar: React.FC = () => {
+const Topbar: React.FC<TopbarProp> = ({ active }) => {
     const [userImage, setUserImage] = useState(defaultImage);
 
     useEffect(() => {
@@ -18,7 +20,7 @@ const Topbar: React.FC = () => {
     }, []);
 
     return (
-        <div className="topbar">
+        <div className={`topbar ${active ? "active" : ""}`}>
             <div className="title">
                 <span className="toptitle">PC Studio</span>
             </div>

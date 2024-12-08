@@ -78,8 +78,8 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       } else {
         setError(res.message);
       }
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      if (err instanceof Error) { setError(err.message); }
     } finally {
       setLoading(false);
     }
@@ -117,8 +117,8 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       } else {
         setError(res.message);
       }
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      if (err instanceof Error) {setError(err.message);}
     } finally {
       setLoading(false);
     }
@@ -221,7 +221,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                   {headerGroups.map((headerGroup, index) => (
                     <tr {...headerGroup.getHeaderGroupProps()} key={`header-${index}`}>
                       {headerGroup.headers.map((col, colIndex) => (
-                        col.show && (
+                        (col as any).show && (
                           <th {...col.getHeaderProps()} key={`col-${colIndex}`} style={{ width: '150px' }}>
                             {col.render("Header")}
                           </th>
@@ -241,7 +241,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                           style={{ cursor: "pointer" }}
                         >
                           {row.cells.map((cell, cellIndex) => (
-                            cell.column.show && (
+                            (cell.column as any).show && (
                               <td {...cell.getCellProps()} key={`cell-${cellIndex}`} style={{ width: '150px' }}>
                                 {cell.render("Cell")}
                               </td>
