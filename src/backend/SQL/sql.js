@@ -133,5 +133,16 @@ function querySQL(qry, source, callback, params = []) {
     });
 }
 
+const querySQLAsync = (query, params = []) => {
+    return new Promise((resolve, reject) => {
+        querySQL(query, null, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        }, params);
+    });
+};
 
-module.exports = querySQL;
+module.exports = { querySQL, querySQLAsync };
