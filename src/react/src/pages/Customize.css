@@ -24,10 +24,7 @@ body {
     margin-left:65px; 
 }
 
-/* When the sidebar is active */
-.sidebar.active ~ .main-content {
-    margin-left: 250px;
-}
+
 
 .logo {
     margin-bottom: 20px;
@@ -115,21 +112,21 @@ body {
     padding-bottom: 20px;
 }
 
-table {
+.container table {
     border-collapse: collapse;
     width: 100%; 
     background-color: #fff; 
 }
   
-  table, th, td {
+.container table, th, td {
     border: 1px solid black; 
-  }
-  
-  th, td {
+}
+
+.container th, td {
     padding: 8px; 
     text-align: left; 
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
+}
+
+.container th {
+background-color: #f2f2f2;
+}
