@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTable } from "react-table";
 import './Components.css';
+import "boxicons/css/boxicons.min.css";
 
 interface ComponentData {
   [key: string]: any;
@@ -8,134 +9,275 @@ interface ComponentData {
 interface ComponentType {
     componentType: "CPU" | "GPU" | "CPU_Cooler" | "Motherboard" | "PowerSupply" | "RAM" | "Storage";
 }
+
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
-const bounce_interval = 2000; // 2s window to boune
-const ITEMS_PER_PAGE = 50;
+const bounce_interval = 2000; // 2s debounce window
 
 const Components: React.FC<ComponentType> = ({ componentType }) => {
+  const [debouncedComponentType, setDebouncedComponentType] = useState(componentType);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [columns, setColumns] = useState<any[]>([]);
+  const [data, setData] = useState<ComponentData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set()); // Track expanded rows
+  const [noResults, setNoResults] = useState<boolean>(false);
+  const [userAdmin, setUserAdmin] = useState(0);
+  const [userId, setUserId] = useState("");
 
-    // rapid request handler
-    const [debouncedComponentType, setDebouncedComponentType] = useState(componentType);
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedComponentType(componentType);
-        }, bounce_interval);
-        return () => clearTimeout(handler);
-    }, [componentType]);
+  useEffect(() => {
+    const storedAdmin = sessionStorage.getItem("user_admin");
+    if (storedAdmin) {
+        setUserAdmin(parseInt(storedAdmin));
+    } else {
+        setUserAdmin(0);
+    }
+  }, []);
 
-    const [columns, setColumns] = useState<any[]>([]);
-    const [data, setData] = useState<ComponentData[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const [currentPage, setCurrentPage] = useState<number>(1);
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("user_id");
+    if (storedId) {
+      setUserId(storedId);
+    } else {
+      setUserId("");
+    }
+  }, []);
+  
+  useEffect(() => {
+    setLoading(true);
+    const handler = setTimeout(() => {
+      setDebouncedComponentType(componentType);
+    }, bounce_interval);
+    return () => clearTimeout(handler);
+  }, [componentType]);
 
-    // Fetch data from the backend
-    useEffect(() => {
-        if (!debouncedComponentType) return;
-        // reset
-        let isMounted = true
-        setLoading(true);
-        setColumns([]);
-        setData([]);
-        setError(null);
+  const fetchDataFromGallery = async () => {
+    setLoading(true);
+    setColumns([]);
+    setData([]);
+    setError(null);
+    setNoResults(false);
 
-        // delay 1s before displaying table
-        const delay = setTimeout(() => {
-            fetch(`${BACKEND_URL}/api/data/gallery?component=${componentType}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((res) => {
-                if (isMounted && res.success) {
-                    const fetched_data = res.data;
-                    const fetched_columns = Object.keys(fetched_data[0]).map((key) => ({
-                        Header: key.replace(/_/g, " "),
-                        accessor: key,
-                    }));
-                    setColumns(fetched_columns);
-                    setData(fetched_data);
-                } else {
-                    setError(res.message);
-                }
-            })
-            .catch((err) => isMounted && setError(err.message))
-            .finally(() => isMounted && setLoading(false));
-        }, 1000);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/data/gallery?component=${componentType}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      const res = await response.json();
+  
+      if (res.success) {
+        const fetched_data = res.data;
+        const fetched_columns = Object.keys(fetched_data[0]).map((key, index, array) => ({
+          Header: key.replace(/_/g, " "),
+          accessor: key,
+          show: index === 0 || index === array.length - 1, // Show only first, second, and last columns
+        }));
+        setColumns(fetched_columns);
+        setData(fetched_data);
+      } else {
+        setError(res.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        return () => {
-            clearTimeout(delay);
-            isMounted = false;
-        };
-    }, [componentType]); // add dependency for re-click
+  const fetchDataFromSearch = async () => {
+    setLoading(true);
+    setColumns([]);
+    setData([]);
+    setError(null);
+    setNoResults(false);
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/user/search?componentType=${componentType}&keyword=${searchQuery}&fullFeatureMode=1`);
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      const res = await response.json();
 
-    const handleNextPage = () => {
-        setCurrentPage((prevPage) => prevPage + 1);
-    };
+      if (res.success) {
+        const fetched_data = res.data[0];
+        console.log(`Fetched data from Search for ${componentType}:`, fetched_data);
+        if (fetched_data.length === 0) {
+          setNoResults(true);
+        } 
+        else {
+          const fetched_columns = Object.keys(fetched_data[0]).map((key, index, array) => ({
+            Header: key.replace(/_/g, " "),
+            accessor: key,
+            show: index === 0 || index === array.length - 1, // Show only first, second, and last columns
+          }));
+          setColumns(fetched_columns);
+          setData(fetched_data);
+        }
+      } else {
+        setError(res.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handlePreviousPage = () => {
-        setCurrentPage((prevPage) => prevPage - 1);
-    };
+  useEffect(() => {
+    if (!debouncedComponentType) return;
+    console.log(`Component type changed to: ${debouncedComponentType}`);
+    setColumns([]); // Clear columns immediately
+    setData([]); // Clear data immediately
+    if (searchQuery) {
+      fetchDataFromSearch();
+    } else {
+      fetchDataFromGallery();
+    }
+  }, [debouncedComponentType, searchQuery]);
 
-    const paginatedData = data.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, allColumns } = useTable({ columns, data });
 
+  const handleSearch = (event: React.FormEvent) => {
+    event.preventDefault();
+    setSearchQuery(searchTerm);
+  };
 
-    return (
-        <div className="main-content">
-            {
-                loading ?
-            (
-                <p> Loading... </p>
-            )
-            :
-            (
-                <div>
-                <h2>${componentType} Details</h2>
-                <p>This is the ${componentType} page content.</p>
-                <table {...getTableProps()} className="component-table">
-                    <thead>
-                    {headerGroups.map((headerGroup, index) => (
-                        <tr {...headerGroup.getHeaderGroupProps()} key={`header-${index}`}>
-                        {headerGroup.headers.map((col, colIndex) => (
-                            <th {...col.getHeaderProps()} key={`col-${colIndex}`}>
+  const toggleRow = (index: number) => {
+    setExpandedRows((prev) => {
+      const updatedRows = new Set(prev);
+      if (updatedRows.has(index)) {
+        updatedRows.delete(index);
+      } else {
+        updatedRows.add(index);
+        // Show all columns when a row is expanded
+        allColumns.forEach(column => column.toggleHidden(false));
+      }
+      return updatedRows;
+    });
+  };
+
+  const ModifyPrice = (itemName: string, currentPrice: number) => {
+    if (userAdmin !== 1) {
+      alert("No authorization!");
+      return;
+    }
+    const newPrice = prompt("Enter new price:", currentPrice.toString());
+    if (newPrice === null || newPrice === "") return;
+    const url = `${BACKEND_URL}/api/admin/price/?componentType=${componentType}&itemName=${encodeURIComponent(itemName)}&price=${newPrice}&userId=${userId}`;
+    console.log(url);
+    fetch(url, { 
+      method: 'PUT',
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        return res.json();
+      } else {
+        throw new Error("Unexpected response format");
+      }
+    })
+    .then(data => {
+      if (data.success) {
+        alert("Price updated successfully.");
+        fetchDataFromGallery();
+      } else {
+        alert(`Error updating price: ${data.message}`);
+      }
+    })
+    .catch(error => {
+      alert(`Error updating price: ${error.message}`);
+    });
+  };
+
+  return (
+    <div className="main-content">
+      {loading ? (
+        <h2>Loading</h2>
+      ) : (
+        <>
+          <div className="search-bar-container">
+            <i className='bx bx-search'></i>
+            <span className="choose-text"> Choose a {debouncedComponentType}</span>
+            <form onSubmit={handleSearch} className="search-bar">
+              <input
+                type="text"
+                placeholder="Search by name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </form>
+          </div>
+          {error ? (
+            <p>{error}</p>
+          ) : noResults ? (
+            <p>No related components found</p>
+          ) : 
+            <div>
+              <table {...getTableProps()} className="component-table">
+                <thead style={{ display: 'none' }}>
+                  {headerGroups.map((headerGroup, index) => (
+                    <tr {...headerGroup.getHeaderGroupProps()} key={`header-${index}`}>
+                      {headerGroup.headers.map((col, colIndex) => (
+                        col.show && (
+                          <th {...col.getHeaderProps()} key={`col-${colIndex}`} style={{ width: '150px' }}>
                             {col.render("Header")}
-                            </th>
-                        ))}
-                        </tr>
-                    ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                    {rows.map((row, rowIndex) => {
-                        prepareRow(row);
-                        return (
-                        <tr {...row.getRowProps()} key={`row-${rowIndex}`}>
-                            {row.cells.map((cell, cellIndex) => (
-                            <td {...cell.getCellProps()} key={`cell-${cellIndex}`}>
+                          </th>
+                        )
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {rows.map((row, rowIndex) => {
+                    prepareRow(row);
+                    return (
+                      <React.Fragment key={`row-${rowIndex}`}>
+                        <tr
+                          {...row.getRowProps()}
+                          onClick={() => toggleRow(rowIndex)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {row.cells.map((cell, cellIndex) => (
+                            cell.column.show && (
+                              <td {...cell.getCellProps()} key={`cell-${cellIndex}`} style={{ width: '150px' }}>
                                 {cell.render("Cell")}
-                            </td>
-                            ))}
+                              </td>
+                            )
+                          ))}
                         </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
-                <div className="pagination">
-                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                    Previous
-                    </button>
-                    <button onClick={handleNextPage} disabled={currentPage * ITEMS_PER_PAGE >= data.length}>
-                    Next
-                    </button>
-                </div>
-                </div>
-            )
-            }
-        </div>
-    );
+                        {expandedRows.has(rowIndex) && (
+                          <tr key={`expanded-${rowIndex}`}>
+                            <td colSpan={columns.length} style={{ backgroundColor: "#f8f9fa", padding: "10px" }}>
+                              <div>
+                                {Object.entries(row.original).map(([key, value]) => (
+                                  <div key={key}>
+                                    {key}: {typeof value === 'object' ? JSON.stringify(value) : value}
+                                    {key.toLowerCase() === 'price' && (
+                                      <button onClick={() => ModifyPrice(row.original[`${debouncedComponentType}_Name`], value)}>
+                                        Modify
+                                      </button>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          }
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Components;

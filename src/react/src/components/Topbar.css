@@ -1,8 +1,8 @@
 .topbar {
     position: fixed;
     top: 0;
-    left: 250px; /* Adjust to the active sidebar width */
-    width: calc(100% - 250px); /* Adjust width to account for sidebar */
+    left: 250px; 
+    width: calc(100% - 250px); 
     height: 60px;
     background-color: #eee;
     display: flex;
@@ -10,7 +10,7 @@
     transition: all 0.5s ease;
     align-items: center;
     padding: 0 20px;
-    z-index: 1100; /* Ensure topbar is above other elements, including sidebar */
+    z-index: 1100; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 

@@ -14,6 +14,14 @@
         "item-gallery": {
             "route": "/api/data",
             "url": "/gallery"
+        },
+        "user-pc": {
+            "route": "/api/user",
+            "url": "/pcs"
+        },
+        "admin-modify-price": {
+            "route": "/api/admin",
+            "url": "/price"
         }
     }
 }

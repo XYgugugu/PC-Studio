@@ -13,17 +13,16 @@ h1 {
 /* Ensure full width for main-content */
 .main-content {
     width: 100%;
-    background-color: white; /* Apply white background to entire section */
-    padding: 20px; /* Optional: Add padding for better spacing */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    min-height: 100vh; /* Ensure it covers the full viewport height */
-    overflow-x: auto; /* Handle horizontal overflow */
+    box-sizing: border-box; 
+    margin-top: 80px; /* Ensure content is below the topbar */
+    margin-left: 80px; /* Ensure content is to the right of the sidebar */
+    max-height: calc(100vh - 90px); /* Ensure main content does not overflow the page */
+    position: relative; /* Ensure positioning context for child elements */
 }
 
 /* Adjust layout when sidebar is active */
 .sidebar-active .main-content {
     margin-left: 250px; /* Adjust this value based on your sidebar width */
-    transition: margin-left 0.3s ease; /* Smooth transition for sidebar activation */
 }
 
 /* Ensure images within main-content are positioned correctly */
@@ -37,14 +36,84 @@ h1 {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
+    table-layout: fixed;
+    word-wrap: break-word; 
+    display: block; 
+    overflow-x: auto; 
+    max-height: calc(100vh - 100px); 
 }
 
 .component-table th, .component-table td {
     border: 1px solid #000;
     padding: 8px;
     text-align: left;
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: nowrap; 
+    width: 150px; /* Set a fixed width for table columns */
 }
 
 .component-table th {
     background-color: #f4f4f4;
 }
+
+.component-table td button {
+    margin-left: 10px;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: hsl(213, 30%, 25%);
+    color: #fff;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.component-table td button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3; /* Change border color on hover */
+}
+
+.search-bar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: sticky; 
+    top: 0; 
+    background-color: white;
+    z-index: 1000; 
+    padding: 10px;
+    border: none; 
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: white; 
+    z-index: 1000; 
+    padding: 5px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border: none; /* Remove border */
+}
+
+.search-bar input {
+    padding: 5px;
+    font-size: 14px;
+    border: 0;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.search-bar button {
+    display: none; /* Hide the search button */
+}
+
+
+.choose-text {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+    margin-left: 10px;
+    margin-right: 20px; 
+}
+

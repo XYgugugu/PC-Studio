@@ -80,6 +80,13 @@ const Sidebar: React.FC<SidebarProp> = ({ onSelect }) => {
                     </div>
                     <span className="tooltip">PowerSupply</span>
                 </li>
+                <li onClick={() => onSelect("Function")}>
+                    <div className="menu-item">
+                        <i className="bx bxs-component"></i>
+                        <span className="nav-item">Function</span>
+                    </div>
+                    <span className="tooltip">Function</span>
+                </li>
             </ul>
         </div>
     );
