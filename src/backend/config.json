@@ -25,9 +25,9 @@
             "route": "/api/admin",
             "url": "/price"
         },
-        "verify-pc-price": {
+        "update-pc": {
             "route": "/api/user",
-            "url": "/verify-pc"
+            "url": "/pc/update"
         }
     }
 }
