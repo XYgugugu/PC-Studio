@@ -12,7 +12,8 @@ const corsOptions = {
         if (
             origin === undefined || // requests without origin (e.g., Postman)
             /^http:\/\/localhost(:\d+)?$/.test(origin) || // localhost
-            /^http:\/\/34\.56\.124\.135(:\d+)?$/.test(origin) // VM ip
+            /^http:\/\/34\.56\.124\.135(:\d+)?$/.test(origin) || // VM ip
+            origin === "https://frontend-service-454493332254.us-central1.run.app/"
         ) {
             callback(null, true);
         } else {
