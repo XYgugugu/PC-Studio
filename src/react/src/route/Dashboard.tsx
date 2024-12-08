@@ -4,9 +4,10 @@ import Topbar from "../components/Topbar";
 import "./Dashboard.css";
 import Components from "../pages/Components";
 import Customize from "../pages/Customize";
-import Function from "../pages/Function";
+import AdvSearch from "../pages/AdvSearch";
 import PClist from "../pages/PClist";
 import Manufacturer from "../pages/Manufacturer";
+
 
 
 const Dashboard: React.FC = () => {
@@ -36,8 +37,8 @@ const Dashboard: React.FC = () => {
         return <Components componentType={"RAM"} />; 
       case "PowerSupply":
         return <Components componentType={"PowerSupply"} />; 
-      case "Function":
-        return <Function/>;
+      case "AdvSearch":
+        return <AdvSearch/>;
       case "PClist":
         return <PClist/>;
       case "Manufacturer":

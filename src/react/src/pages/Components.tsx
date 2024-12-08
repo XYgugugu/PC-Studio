@@ -47,6 +47,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
   
   useEffect(() => {
     setLoading(true);
+    setSearchTerm("");
     const handler = setTimeout(() => {
       setDebouncedComponentType(componentType);
     }, bounce_interval);
@@ -68,11 +69,15 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       const res = await response.json();
   
       if (res.success) {
-        const fetched_data = res.data;
+        // const fetched_data = res.data;
+        const fetched_data = res.data.map((item: ComponentData) => ({
+          ...item,
+          Price: `$${item.Price}`, // Add `$` prefix to the Price field
+        }));
         const fetched_columns = Object.keys(fetched_data[0]).map((key, index, array) => ({
           Header: key.replace(/_/g, " "),
           accessor: key,
-          show: index === 0 || index === array.length - 1, // Show only first, second, and last columns
+          show: index === 0 || index === array.length - 1, 
         }));
         setColumns(fetched_columns);
         setData(fetched_data);
@@ -101,7 +106,11 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       const res = await response.json();
 
       if (res.success) {
-        const fetched_data = res.data[0];
+        // const fetched_data = res.data[0];
+        const fetched_data = res.data[0].map((item: ComponentData) => ({
+          ...item,
+          Price: `$${item.Price}`, 
+        }));
         console.log(`Fetched data from Search for ${componentType}:`, fetched_data);
         if (fetched_data.length === 0) {
           setNoResults(true);
@@ -110,7 +119,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
           const fetched_columns = Object.keys(fetched_data[0]).map((key, index, array) => ({
             Header: key.replace(/_/g, " "),
             accessor: key,
-            show: index === 0 || index === array.length - 1, // Show only first, second, and last columns
+            show: index === 0 || index === array.length - 1, 
           }));
           setColumns(fetched_columns);
           setData(fetched_data);
@@ -218,7 +227,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
           ) : 
             <div>
               <table {...getTableProps()} className="component-table">
-                <thead style={{ display: 'none' }}>
+                <thead>
                   {headerGroups.map((headerGroup, index) => (
                     <tr {...headerGroup.getHeaderGroupProps()} key={`header-${index}`}>
                       {headerGroup.headers.map((col, colIndex) => (
@@ -250,9 +259,16 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                           ))}
                         </tr>
                         {expandedRows.has(rowIndex) && (
-                          <tr key={`expanded-${rowIndex}`}>
+                          <tr className="expanded-row" key={`expanded-${rowIndex}`}>
                             <td colSpan={columns.length} style={{ backgroundColor: "#f8f9fa", padding: "10px" }}>
-                              <div>
+                              <div
+                                style={{
+                                  maxWidth: "100%",
+                                  wordWrap: "break-word", 
+                                  whiteSpace: "normal",
+                                  overflow: "hidden",
+                                }}
+                              >
                                 {Object.entries(row.original).map(([key, value]) => (
                                   <div key={key}>
                                     {key}: {typeof value === 'object' ? JSON.stringify(value) : value}
