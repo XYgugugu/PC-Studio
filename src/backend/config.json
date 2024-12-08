@@ -28,6 +28,14 @@
         "update-pc": {
             "route": "/api/user",
             "url": "/pc/update"
+        },
+        "recommend-pc": {
+            "route": "/api/user",
+            "url": "/recommend"
+        },
+        "manufacturer-product-count-rank": {
+            "route": "/api/misc",
+            "url": "/rank/manufacturer-product-count"
         }
     }
 }
