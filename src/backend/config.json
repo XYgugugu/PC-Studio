@@ -24,6 +24,10 @@
         "admin-modify-price": {
             "route": "/api/admin",
             "url": "/price"
+        },
+        "update-pc": {
+            "route": "/api/user",
+            "url": "/pc/update"
         }
     }
 }

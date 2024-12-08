@@ -1,7 +1,7 @@
 const express = require('express');
 const config = require("../config.json");
 const { OAuth2Client } = require('google-auth-library');
-const querySQL = require('../SQL/sql');
+const { querySQL } = require('../SQL/sql');
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const config = require("../config.json");
-const querySQL = require("../SQL/sql");
+const { querySQL } = require("../SQL/sql");
 
 const router = express.Router();
 

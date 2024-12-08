@@ -123,7 +123,6 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     if (!debouncedComponentType) return;
     console.log(`Component type changed to: ${debouncedComponentType}`);

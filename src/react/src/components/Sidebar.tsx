@@ -87,6 +87,22 @@ const Sidebar: React.FC<SidebarProp> = ({ onSelect }) => {
                     </div>
                     <span className="tooltip">Function</span>
                 </li>
+
+                <li onClick={() => onSelect("PClist")}>
+                    <div className="menu-item">
+                        <i className="bx bxs-component"></i>
+                        <span className="nav-item">PClist</span>
+                    </div>
+                    <span className="tooltip">PClist</span>
+                </li>
+
+                <li onClick={() => onSelect("Manufacturer")}>
+                    <div className="menu-item">
+                        <i className="bx bxs-component"></i>
+                        <span className="nav-item">Manufacturer</span>
+                    </div>
+                    <span className="tooltip">Manufacturer</span>
+                </li>
             </ul>
         </div>
     );
