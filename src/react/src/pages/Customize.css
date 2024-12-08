@@ -7,21 +7,22 @@
 
 body {
     background-color: #fff; 
-    min-height: 100vh; 
-    overflow: hidden; 
+    overflow-y: auto;
 }
 
 .main-content {
     position: relative;
     background-color: #fff; 
-    min-height: 100vh;
     padding: 20px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    justify-content: flex-start;
     transition: all 0.5s ease-in-out;
     margin-left:65px; 
+    margin-top: -15px;
 }
 
 
@@ -80,6 +81,7 @@ body {
 
 .button-container {
     margin-top: 20px;
+    margin-left: 40px;
 }
 
 .button-container button {
@@ -104,11 +106,11 @@ body {
 .table-container {
     width: 100%;
     max-width: 1200px;
-    margin-top: 20px; 
+    margin-top: 0px; 
     background-color: #fff;
     overflow-x: auto; 
     overflow-y: auto; 
-    max-height: 450px;
+    max-height: 500px;
     padding-bottom: 20px;
 }
 

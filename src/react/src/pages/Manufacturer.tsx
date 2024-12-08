@@ -16,17 +16,15 @@ const Manufacturer: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BACKEND_URL}/api/data`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        });
+        const response = await fetch(`${BACKEND_URL}/api/misc/rank/manufacturer-product-count`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const result = await response.json();
-        setTableData(result.data);
+        const extractedData = result.data && result.data.length > 0 ? result.data[0] : [];
+        setTableData(extractedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -50,7 +48,7 @@ const Manufacturer: React.FC = () => {
           <table className="data-table">
             <thead>
               <tr>
-                {Object.keys(tableData[0]).map((key, index) => (
+                {Object.keys(tableData[0] || {}).map((key, index) => (
                   <th key={index}>{key}</th>
                 ))}
               </tr>
