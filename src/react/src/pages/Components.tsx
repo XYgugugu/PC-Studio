@@ -201,6 +201,36 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
     });
   };
 
+
+  const CheckDeleteGPU = (itemName: string, currentPrice: number) => {
+    if (userAdmin !== 1) {
+      alert("No authorization!");
+      return;
+    }
+    const url = `${BACKEND_URL}/api/admin/unusual/gpu?userId=${userId}&itemName=${encodeURIComponent(itemName)}`;
+    console.log(url);
+    fetch(url, { 
+      method: 'DELETE',
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      if (data.success) {
+        alert(`${data.message}`);
+      } else {
+        alert(`${data.message}`);
+      }
+    })
+    .catch(error => {
+      alert(`Error checking price: ${error.message}`);
+    });
+  };
+
   return (
     <div className="component-content">
       {loading ? (
@@ -282,6 +312,15 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                                       }
                                       }>
                                         Modify
+                                      </button>
+                                    )}
+                                    {key.toLowerCase() === 'price' && debouncedComponentType === 'GPU' && (
+                                      <button onClick={() => {
+                                        const currentPrice = value.replace('$', '');
+                                        CheckDeleteGPU(row.original[`${debouncedComponentType}_Name`], currentPrice)
+                                      }
+                                      }>
+                                        Check Price
                                       </button>
                                     )}
                                   </div>
