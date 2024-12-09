@@ -171,6 +171,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
     }
     const newPrice = prompt("Enter new price:", currentPrice.toString());
     if (newPrice === null || newPrice === "") return;
+    console.log(itemName);
     const url = `${BACKEND_URL}/api/admin/price/?componentType=${componentType}&itemName=${encodeURIComponent(itemName)}&price=${newPrice}&userId=${userId}`;
     console.log(url);
     fetch(url, { 
@@ -271,7 +272,15 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
                                   <div key={key}>
                                     {key}: {typeof value === 'object' ? JSON.stringify(value) : value}
                                     {key.toLowerCase() === 'price' && (
-                                      <button onClick={() => ModifyPrice(row.original[`${debouncedComponentType}_Name`], value)}>
+                                      <button onClick={() => {
+                                        const displayComponentType = debouncedComponentType === 'RAM' 
+                                          ? 'Memory' 
+                                          : debouncedComponentType === 'CPU_Cooler' 
+                                            ? 'Cooler' 
+                                            : debouncedComponentType;
+                                        ModifyPrice(row.original[`${displayComponentType}_Name`], value)
+                                      }
+                                      }>
                                         Modify
                                       </button>
                                     )}
