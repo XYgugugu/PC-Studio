@@ -54,7 +54,7 @@ router.put(config.backend['admin-modify-price'].url, (req, res) => {
 function getStoredProcedure(componentType) {
     switch (componentType) {
         case 'CPU': return 'AdminUpdatePriceCPU';
-        case 'CPUCooler': return 'AdminUpdatePriceCPUCooler';
+        case 'CPU_Cooler': return 'AdminUpdatePriceCPUCooler';
         case 'GPU': return 'AdminUpdatePriceGPU';
         case 'Motherboard': return 'AdminUpdatePriceMotherboard';
         case 'Powersupply': return 'AdminUpdatePricePowersupply';
@@ -63,5 +63,37 @@ function getStoredProcedure(componentType) {
         default: return null;
     }
 }
+
+router.delete(config.backend['admin-delete-unusual-gpu'].url, (req, res) => {
+    const userId = req.query.userId;
+    const itemName = req.query.itemName;
+    const query = [
+        `Call CheckAndDeleteUnusualGPU(?,?, @status);`,
+        `SELECT @status AS status;`
+    ];
+    params = [[userId, itemName], []];
+
+    querySQL(query, null, (err, result) => {
+        if (err) {
+            console.log(`Error executing procedure: ${err}`);
+            return res.status(500).json({
+                success:false,
+                message: "Error executing procedure"
+            });
+        }
+        const status = result[1][0].status;
+        if (status) {
+            return res.status(200).json({
+                success: true,
+                message: "Unusual GPU deleted"
+            })
+        } else {
+            return res.status(200).json({
+                success: false,
+                message: "Valid GPU"
+            })
+        }
+    }, params);
+});
 
 module.exports = router;
