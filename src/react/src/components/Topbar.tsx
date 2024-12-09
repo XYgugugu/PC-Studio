@@ -29,7 +29,7 @@ const Topbar: React.FC = () => {
                 className="userImage"
                 onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = defaultImage; // Set to default image if loading fails
+                    target.src = defaultImage; 
                 }}
             />
             </div>

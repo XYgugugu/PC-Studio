@@ -20,7 +20,7 @@
     justify-content: left;
     align-items: center;
     pointer-events: none;
-    opacity: 1; /* Always visible */
+    opacity: 1; 
     margin-left: 20px;
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import XJFT from "../img/XJFT.png";
-import "./Customize.css"; // Import the CSS file
+import "./Customize.css"; 
 import "../route/Login";
 import { config } from "../config";
 
@@ -294,7 +294,6 @@ const CustomizeForm: React.FC = () => {
             </div>
           </div>
           ) : (
-            // Display message for empty results
             <div>
               <h2>No results found for {currentComponent}</h2>
               <p>Please modify your search and try again.</p>

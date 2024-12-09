@@ -22,7 +22,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
   const [data, setData] = useState<ComponentData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set()); // Track expanded rows
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set()); 
   const [noResults, setNoResults] = useState<boolean>(false);
   const [userAdmin, setUserAdmin] = useState(0);
   const [userId, setUserId] = useState("");
@@ -46,8 +46,9 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
   }, []);
   
   useEffect(() => {
-    setLoading(true);
     setSearchTerm("");
+    setLoading(true);
+    setExpandedRows(new Set());
     const handler = setTimeout(() => {
       setDebouncedComponentType(componentType);
     }, bounce_interval);
@@ -72,7 +73,7 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
         // const fetched_data = res.data;
         const fetched_data = res.data.map((item: ComponentData) => ({
           ...item,
-          Price: `$${item.Price}`, // Add `$` prefix to the Price field
+          Price: `$${item.Price}`, 
         }));
         const fetched_columns = Object.keys(fetched_data[0]).map((key, index, array) => ({
           Header: key.replace(/_/g, " "),
@@ -111,7 +112,6 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
           ...item,
           Price: `$${item.Price}`, 
         }));
-        console.log(`Fetched data from Search for ${componentType}:`, fetched_data);
         if (fetched_data.length === 0) {
           setNoResults(true);
         } 
@@ -135,9 +135,8 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
   };
   useEffect(() => {
     if (!debouncedComponentType) return;
-    console.log(`Component type changed to: ${debouncedComponentType}`);
-    setColumns([]); // Clear columns immediately
-    setData([]); // Clear data immediately
+    setColumns([]); 
+    setData([]); 
     if (searchQuery) {
       fetchDataFromSearch();
     } else {
@@ -159,7 +158,6 @@ const Components: React.FC<ComponentType> = ({ componentType }) => {
         updatedRows.delete(index);
       } else {
         updatedRows.add(index);
-        // Show all columns when a row is expanded
         allColumns.forEach(column => column.toggleHidden(false));
       }
       return updatedRows;

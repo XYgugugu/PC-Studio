@@ -11,14 +11,9 @@ import Manufacturer from "../pages/Manufacturer";
 
 
 const Dashboard: React.FC = () => {
-  const [sidebarActive, setSidebarActive] = useState(false);
-  const [selectedSection, setSelectedSection] = useState("Customize"); // Default section
+  const [selectedSection, setSelectedSection] = useState("Customize");
 
-  const toggleSidebarActive = () => {
-    setSidebarActive(!sidebarActive);
-  };
 
-  // enable cache
   const renderContent = useCallback(() => {
     switch (selectedSection) {
       case "Customize":
@@ -51,13 +46,11 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <Sidebar
-        active={sidebarActive}
-        toggleSidebar={toggleSidebarActive}
-        onSelect={setSelectedSection} // Callback to update selected section
+        onSelect={setSelectedSection} 
       />
-      <Topbar active={sidebarActive} />
+      <Topbar  />
       <div className="main-content">
-        {renderContent()} {/* Render the selected content */}
+        {renderContent()} {}
       </div>
     </div>
   );
