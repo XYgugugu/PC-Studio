@@ -25,6 +25,10 @@
             "route": "/api/admin",
             "url": "/price"
         },
+        "admin-delete-unusual-gpu": {
+            "route": "api/admin",
+            "url": "/unusual/gpu"
+        },
         "update-pc": {
             "route": "/api/user",
             "url": "/pc/update"
